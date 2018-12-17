@@ -4504,7 +4504,7 @@ var FontSize_toggleFontSize = function toggleFontSize(event, props) {
 };
 
 /* harmony default export */ var FontSize = (function (props) {
-  var caption = 16;
+  var caption = 12;
   var currentFontSize = null;
   var dropDownInstance = null;
   props.fontSizes.find(function (item) {

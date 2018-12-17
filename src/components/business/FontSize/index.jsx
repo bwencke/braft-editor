@@ -23,7 +23,7 @@ const toggleFontSize = (event, props) => {
 
 export default (props) => {
 
-  let caption = 16
+  let caption = 12
   let currentFontSize = null
   let dropDownInstance = null
 
