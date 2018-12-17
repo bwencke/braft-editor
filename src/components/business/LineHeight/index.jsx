@@ -23,13 +23,11 @@ const toggleLineHeight = (event, props) => {
 
 export default (props) => {
 
-  let caption = null
   let currentLineHeight = null
   let dropDownInstance = null
 
   props.lineHeights.find((item) => {
     if (ContentUtils.selectionHasInlineStyle(props.editorState, 'LINEHEIGHT-' + item)) {
-      caption = item
       currentLineHeight = item
       return true
     }

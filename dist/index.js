@@ -4564,12 +4564,10 @@ var LineHeight_toggleLineHeight = function toggleLineHeight(event, props) {
 };
 
 /* harmony default export */ var LineHeight = (function (props) {
-  var caption = null;
   var currentLineHeight = null;
   var dropDownInstance = null;
   props.lineHeights.find(function (item) {
     if (external_braft_utils_["ContentUtils"].selectionHasInlineStyle(props.editorState, 'LINEHEIGHT-' + item)) {
-      caption = item;
       currentLineHeight = item;
       return true;
     }
@@ -4578,11 +4576,11 @@ var LineHeight_toggleLineHeight = function toggleLineHeight(event, props) {
   });
   return external_react_default.a.createElement(DropDown_DropDown, {
     autoHide: true,
-    caption: caption || props.defaultCaption,
-    containerNode: props.containerNode,
-    title: external_react_default.a.createElement("i", {
+    caption: external_react_default.a.createElement("i", {
       className: "mdi mdi-format-line-spacing"
     }),
+    containerNode: props.containerNode,
+    title: props.language.controls.lineHeight,
     ref: function ref(instance) {
       return dropDownInstance = instance;
     },
