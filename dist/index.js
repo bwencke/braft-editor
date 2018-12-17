@@ -2056,7 +2056,7 @@ var handlers_pastedTextHandlers = function pastedTextHandlers(text, html, editor
 
   var tempColors = external_braft_utils_["ColorUtils"].detectColorsFromHTMLString(html);
   editor.setState({
-    tempColors: toConsumableArray_default()(editor.state.tempColors).concat(toConsumableArray_default()(tempColors)).filter(function (item) {
+    tempColors: [].concat(toConsumableArray_default()(editor.state.tempColors), toConsumableArray_default()(tempColors)).filter(function (item) {
       return editor.editorProps.colors.indexOf(item) === -1;
     }).filter(function (item, index, array) {
       return array.indexOf(item) === index;
@@ -3749,7 +3749,7 @@ var createStrategy = function createStrategy(type) {
 
 /* harmony default export */ var decorators = (function (editorId) {
   var extensionDecorators = getExtensionDecorators(editorId);
-  var entityDecorators = builtinDecorators.concat(toConsumableArray_default()(extensionDecorators.filter(function (item) {
+  var entityDecorators = [].concat(builtinDecorators, toConsumableArray_default()(extensionDecorators.filter(function (item) {
     return item.type === 'entity';
   })));
   var strategyDecorators = extensionDecorators.filter(function (item) {
@@ -3758,9 +3758,9 @@ var createStrategy = function createStrategy(type) {
   var classDecorators = extensionDecorators.filter(function (item) {
     return item.type === 'class';
   });
-  return new draft_js_multidecorators_default.a(toConsumableArray_default()(classDecorators.map(function (item) {
+  return new draft_js_multidecorators_default.a([].concat(toConsumableArray_default()(classDecorators.map(function (item) {
     return item.decorator;
-  })).concat([// combine decorators created with strategy
+  })), [// combine decorators created with strategy
   new external_draft_js_["CompositeDecorator"](strategyDecorators.map(function (item) {
     return item.decorator;
   })), // combine decorators for entities
@@ -5669,7 +5669,7 @@ var filterColors = function filterColors(colors, colors2) {
 };
 
 var editor_isControlEnabled = function isControlEnabled(props, controlName) {
-  return toConsumableArray_default()(props.controls).concat(toConsumableArray_default()(props.extendControls)).find(function (item) {
+  return [].concat(toConsumableArray_default()(props.controls), toConsumableArray_default()(props.extendControls)).find(function (item) {
     return item === controlName || item.key === controlName;
   }) && props.excludeControls.indexOf(controlName) === -1;
 };
@@ -5913,7 +5913,7 @@ function (_React$Component) {
         var tempColors = external_braft_utils_["ColorUtils"].detectColorsFromDraftState(editorState.toRAW(true));
         editorState.setConvertOptions(editor_getConvertOptions(this.editorProps));
         this.setState({
-          tempColors: filterColors(toConsumableArray_default()(this.state.tempColors).concat(toConsumableArray_default()(tempColors)), this.editorProps.colors),
+          tempColors: filterColors([].concat(toConsumableArray_default()(this.state.tempColors), toConsumableArray_default()(tempColors)), this.editorProps.colors),
           editorState: editorState
         }, function () {
           _this3.props.triggerChangeOnMount && _this3.props.onChange && _this3.props.onChange(editorState);
@@ -5973,7 +5973,7 @@ function (_React$Component) {
           var tempColors = external_braft_utils_["ColorUtils"].detectColorsFromDraftState(nextEditorState.toRAW(true));
           nextEditorState.setConvertOptions(editor_getConvertOptions(this.editorProps));
           this.setState({
-            tempColors: filterColors(toConsumableArray_default()(this.state.tempColors).concat(toConsumableArray_default()(tempColors)), currentProps.colors),
+            tempColors: filterColors([].concat(toConsumableArray_default()(this.state.tempColors), toConsumableArray_default()(tempColors)), currentProps.colors),
             editorState: nextEditorState
           }, function () {
             _this4.props.onChange && _this4.props.onChange(nextEditorState);
@@ -6064,7 +6064,7 @@ function (_React$Component) {
         containerNode: this.state.containerNode,
         className: controlBarClassName,
         style: controlBarStyle,
-        colors: toConsumableArray_default()(colors).concat(toConsumableArray_default()(this.state.tempColors)),
+        colors: [].concat(toConsumableArray_default()(colors), toConsumableArray_default()(this.state.tempColors)),
         colorPicker: colorPicker,
         colorPickerTheme: colorPickerTheme,
         colorPickerAutoHide: colorPickerAutoHide,
