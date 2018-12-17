@@ -23,7 +23,7 @@ const toggleFontSize = (event, props) => {
 
 export default (props) => {
 
-  let caption = null
+  let caption = 16
   let currentFontSize = null
   let dropDownInstance = null
 
@@ -39,7 +39,7 @@ export default (props) => {
   return (
     <DropDown
       autoHide={true}
-      caption={caption || props.defaultCaption}
+      caption={caption}
       containerNode={props.containerNode}
       title={props.language.controls.fontSize}
       ref={(instance) => dropDownInstance = instance}

@@ -4504,7 +4504,7 @@ var FontSize_toggleFontSize = function toggleFontSize(event, props) {
 };
 
 /* harmony default export */ var FontSize = (function (props) {
-  var caption = null;
+  var caption = 16;
   var currentFontSize = null;
   var dropDownInstance = null;
   props.fontSizes.find(function (item) {
@@ -4518,7 +4518,7 @@ var FontSize_toggleFontSize = function toggleFontSize(event, props) {
   });
   return external_react_default.a.createElement(DropDown_DropDown, {
     autoHide: true,
-    caption: caption || props.defaultCaption,
+    caption: caption,
     containerNode: props.containerNode,
     title: props.language.controls.fontSize,
     ref: function ref(instance) {
