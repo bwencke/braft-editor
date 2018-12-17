@@ -39,9 +39,9 @@ export default (props) => {
   return (
     <DropDown
       autoHide={true}
-      caption={caption || props.defaultCaption}
+      caption={<i className='mdi mdi-format-line-spacing'></i>}
       containerNode={props.containerNode}
-      title={<i className='mdi mdi-format-line-spacing'></i>}
+      title={props.language.controls.lineHeight}
       ref={(instance) => dropDownInstance = instance}
       className={'control-item dropdown bf-line-height-dropdown'}
     >
