@@ -96,7 +96,16 @@
     background-color: #fff;
 
     ul {
+      -webkit-margin-before: 0;
+      -webkit-margin-after: 0;
       -webkit-padding-start: 0;
+
+      li {
+        border-radius: 2px;
+        &:hover {
+          background-color: #e5e5e5;
+        }
+      }
     }
   }
   .dropdown-handler{
