@@ -105,6 +105,9 @@
         &:hover {
           background-color: #fafafa;
         }
+        &:active {
+          background-color: $COLOR_ACTIVE;
+        }
       }
     }
   }
