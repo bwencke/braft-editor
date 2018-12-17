@@ -5414,9 +5414,12 @@ function (_React$Component) {
       var extensionControls = getExtensionControls(editorId);
       var allControls = mergeControls(commonProps, controls, extensionControls, extendControls);
       this.allControls = allControls;
+      var styleObject = Object.assign({}, style, editor.isFocused ? null : {
+        display: 'none'
+      });
       return external_react_default.a.createElement("div", {
         className: "bf-controlbar ".concat(className || ''),
-        style: style,
+        style: styleObject,
         onMouseDown: this.preventDefault
       }, allControls.map(function (item, index) {
         var itemKey = typeof item === 'string' ? item : item.key;

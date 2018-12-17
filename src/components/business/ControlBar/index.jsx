@@ -179,8 +179,10 @@ export default class ControlBar extends React.Component {
 
     this.allControls = allControls
 
+    const styleObject = Object.assign({}, style, editor.isFocused ? null : { display: 'none' })
+
     return (
-      <div className={`bf-controlbar ${className || ''}`} style={style} onMouseDown={this.preventDefault}>
+      <div className={`bf-controlbar ${className || ''}`} style={styleObject} onMouseDown={this.preventDefault}>
         {
           allControls.map((item, index) => {
 
