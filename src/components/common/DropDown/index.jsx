@@ -75,7 +75,7 @@ export default class DropDown extends React.Component {
         )}
         <div
           className='dropdown-content'
-          style={{marginLeft: offset }}
+          style={{marginLeft: offset}}
           ref={(instance) => this.dropDownContentElement = instance}
         >
           <i
