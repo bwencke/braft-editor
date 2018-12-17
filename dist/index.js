@@ -4580,7 +4580,9 @@ var LineHeight_toggleLineHeight = function toggleLineHeight(event, props) {
     autoHide: true,
     caption: caption || props.defaultCaption,
     containerNode: props.containerNode,
-    title: props.language.controls.lineHeight,
+    title: external_react_default.a.createElement("i", {
+      className: "mdi mdi-format-line-spacing"
+    }),
     ref: function ref(instance) {
       return dropDownInstance = instance;
     },
