@@ -1,7 +1,8 @@
 @import '~scssinc';
 
-.bf-content {
+.bf-content{
   overflow: auto;
+  font-size: 1.2rem;
   img{
     user-select: none;
   }
@@ -159,28 +160,24 @@
     text-align: left;
     .public-DraftStyleDefault-ltr{
       text-align: left;
-      font-size: 1.2em;
     }
   }
   .bfa-right {
     text-align: right;
     .public-DraftStyleDefault-ltr{
       text-align: right;
-      font-size: 1.2em;
     }
   }
   .bfa-center {
     text-align: center;
     .public-DraftStyleDefault-ltr{
       text-align: center;
-      font-size: 1.2em;
     }
   }
   .bfa-justify {
     text-align: justify;
     .public-DraftStyleDefault-ltr{
       text-align: justify;
-      font-size: 1.2em;
     }
   }
   .bfa-left,
