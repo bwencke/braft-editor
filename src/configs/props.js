@@ -87,7 +87,7 @@ export default {
     family: 'tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif'
   }],
   converts: {
-    unitExportFn: (value, type) => type === 'line-height' ? value : `${value}px`,
+    unitExportFn: (value, type) => type === 'line-height' ? value : `${value/10}rem`,
   },
   emojis: [
     '🤣', '🙌', '💚', '💛', '👏', '😉', '💯',
