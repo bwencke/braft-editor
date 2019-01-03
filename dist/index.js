@@ -4918,8 +4918,8 @@ function (_React$Component) {
         key: 0,
         type: "button",
         "data-title": language.controls.increaseIndent,
-        disabled: currentIndent >= 6,
-        className: "control-item button button-indent-increase".concat(currentIndent > 0 && currentIndent < 6 ? ' active' : ''),
+        disabled: currentIndent >= 10,
+        className: "control-item button button-indent-increase".concat(currentIndent > 0 && currentIndent < 10 ? ' active' : ''),
         onClick: this.increaseIndent
       }, external_react_default.a.createElement("i", {
         className: 'bfi-indent-increase'
