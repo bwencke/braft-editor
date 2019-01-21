@@ -71,7 +71,7 @@ export default {
     56, 64, 72, 96, 120, 144
   ],
   fontFamilies: [{
-    name: 'Araial',
+    name: 'Arial',
     family: 'Arial, Helvetica, sans-serif'
   }, {
     name: 'Georgia',
@@ -88,6 +88,7 @@ export default {
   }],
   converts: {
     unitExportFn: (value, type) => type === 'line-height' ? value : `${(value-2)/10}em`,
+    unitImportFn: value => value*10+2
   },
   emojis: [
     '🤣', '🙌', '💚', '💛', '👏', '😉', '💯',

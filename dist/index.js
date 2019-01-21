@@ -1815,7 +1815,7 @@ var external_immutable_default = /*#__PURE__*/__webpack_require__.n(external_imm
   lineHeights: [1, 1.2, 1.5, 1.75, 2, 2.5, 3, 4],
   fontSizes: [12, 14, 16, 18, 20, 24, 28, 30, 32, 36, 40, 48, 56, 64, 72, 96, 120, 144],
   fontFamilies: [{
-    name: 'Araial',
+    name: 'Arial',
     family: 'Arial, Helvetica, sans-serif'
   }, {
     name: 'Georgia',
@@ -1833,6 +1833,9 @@ var external_immutable_default = /*#__PURE__*/__webpack_require__.n(external_imm
   converts: {
     unitExportFn: function unitExportFn(value, type) {
       return type === 'line-height' ? value : "".concat((value - 2) / 10, "em");
+    },
+    unitImportFn: function unitImportFn(value) {
+      return value * 10 + 2;
     }
   },
   emojis: ['🤣', '🙌', '💚', '💛', '👏', '😉', '💯', '💕', '💞', '💘', '💙', '💝', '🖤', '💜', '❤️', '😍', '😻', '💓', '💗', '😋', '😇', '😂', '😹', '😘', '💖', '😁', '😀', '🤞', '😲', '😄', '😊', '👍', '😌', '😃', '😅', '✌️', '🤗', '💋', '😗', '😽', '😚', '🤠', '😙', '😺', '👄', '😸', '😏', '😼', '👌', '😎', '😆', '😛', '🙏', '🤝', '🙂', '🤑', '😝', '😐', '😑', '🤤', '😤', '🙃', '🤡', '😶', '😪', '😴', '😵', '😓', '👊', '😦', '😷', '🤐', '😜', '🤓', '👻', '😥', '🙄', '🤔', '🤒', '🙁', '😔', '😯', '☹️', '☠️', '😰', '😩', '😖', '😕', '😒', '😣', '😢', '😮', '😿', '🤧', '😫', '🤥', '😞', '😬', '👎', '💀', '😳', '😨', '🤕', '🤢', '😱', '😭', '😠', '😈', '😧', '💔', '😟', '🙀', '💩', '👿', '😡', '😾', '🖕'],
@@ -6198,6 +6201,7 @@ external_draft_js_["EditorState"].prototype.isEmpty = function () {
 editor_BraftEditor.createEditorState = external_draft_js_["EditorState"].createFrom = function (content) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   options.unitExportFn = options.unitExportFn || editor_BraftEditor.defaultProps.converts.unitExportFn;
+  options.unitImportFn = options.unitImportFn || editor_BraftEditor.defaultProps.converts.unitImportFn;
   options.styleImportFn = compositeStyleImportFn(options.styleImportFn, options.editorId);
   options.entityImportFn = compositeEntityImportFn(options.entityImportFn, options.editorId);
   options.blockImportFn = compositeBlockImportFn(options.blockImportFn, options.editorId);
