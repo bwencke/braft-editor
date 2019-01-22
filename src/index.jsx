@@ -27,7 +27,6 @@ EditorState.prototype.isEmpty = function () {
 BraftEditor.createEditorState = EditorState.createFrom = (content, options = {}) => {
 
   options.unitExportFn = options.unitExportFn || BraftEditor.defaultProps.converts.unitExportFn
-  options.unitImportFn = options.unitImportFn || BraftEditor.defaultProps.converts.unitImportFn
   options.styleImportFn = compositeStyleImportFn(options.styleImportFn, options.editorId)
   options.entityImportFn = compositeEntityImportFn(options.entityImportFn, options.editorId)
   options.blockImportFn = compositeBlockImportFn(options.blockImportFn, options.editorId)
