@@ -6200,8 +6200,8 @@ external_draft_js_["EditorState"].prototype.isEmpty = function () {
 
 editor_BraftEditor.createEditorState = external_draft_js_["EditorState"].createFrom = function (content) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  options.unitExportFn = options.unitExportFn || editor_BraftEditor.defaultProps.converts.unitExportFn; //options.unitImportFn = options.unitImportFn || BraftEditor.defaultProps.converts.unitImportFn
-
+  options.unitExportFn = options.unitExportFn || editor_BraftEditor.defaultProps.converts.unitExportFn;
+  options.unitImportFn = options.unitImportFn || editor_BraftEditor.defaultProps.converts.unitImportFn;
   options.styleImportFn = compositeStyleImportFn(options.styleImportFn, options.editorId);
   options.entityImportFn = compositeEntityImportFn(options.entityImportFn, options.editorId);
   options.blockImportFn = compositeBlockImportFn(options.blockImportFn, options.editorId);
