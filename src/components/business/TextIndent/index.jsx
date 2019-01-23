@@ -15,7 +15,7 @@ export default class TextAlign extends React.Component {
   }
 
   increaseIndent = () => {
-    this.props.editor.setValue(ContentUtils.increaseSelectionIndent(this.props.editorState))
+    this.props.editor.setValue(ContentUtils.increaseSelectionIndent(this.props.editorState, 10))
     this.props.editor.requestFocus()
   }
 

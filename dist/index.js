@@ -1909,7 +1909,7 @@ var handlers_keyCommandHandlers = function keyCommandHandlers(command, editorSta
       editor.setValue(external_braft_utils_["ContentUtils"].insertText(editorState, ' '.repeat(editor.editorProps.codeTabIndents)));
       return 'handled';
     } else if (_blockType !== 'atomic' && allowIndent && cursorIsAtFirst) {
-      editor.setValue(external_braft_utils_["ContentUtils"].increaseSelectionIndent(editorState));
+      editor.setValue(external_braft_utils_["ContentUtils"].increaseSelectionIndent(editorState, 10));
       return 'handled';
     }
   }
@@ -4891,7 +4891,7 @@ function (_React$Component) {
     });
 
     defineProperty_default()(assertThisInitialized_default()(assertThisInitialized_default()(_this)), "increaseIndent", function () {
-      _this.props.editor.setValue(external_braft_utils_["ContentUtils"].increaseSelectionIndent(_this.props.editorState));
+      _this.props.editor.setValue(external_braft_utils_["ContentUtils"].increaseSelectionIndent(_this.props.editorState, 10));
 
       _this.props.editor.requestFocus();
     });
