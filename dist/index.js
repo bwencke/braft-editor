@@ -1911,7 +1911,8 @@ var handlers_keyCommandHandlers = function keyCommandHandlers(command, editorSta
     } else if (_blockType !== 'atomic' && allowIndent && cursorIsAtFirst) {
       editor.setValue(external_braft_utils_["ContentUtils"].insertText(editorState, '            ', null, {
         type: 'INDENT',
-        mutability: 'IMMUTABLE'
+        mutability: 'IMMUTABLE',
+        data: {}
       }));
       return 'handled';
     }

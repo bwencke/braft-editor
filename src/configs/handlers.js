@@ -44,7 +44,8 @@ export const keyCommandHandlers = (command, editorState, editor) => {
     } else if (blockType !== 'atomic' && allowIndent && cursorIsAtFirst) {
       editor.setValue(ContentUtils.insertText(editorState, '            ', null, {
         type: 'INDENT',
-        mutability: 'IMMUTABLE'
+        mutability: 'IMMUTABLE',
+        data: {}
       }))
       return 'handled'
     }
