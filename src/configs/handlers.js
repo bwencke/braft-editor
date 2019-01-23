@@ -41,8 +41,8 @@ export const keyCommandHandlers = (command, editorState, editor) => {
     if (blockType === 'code-block') {
       editor.setValue(ContentUtils.insertText(editorState, ' '.repeat(editor.editorProps.codeTabIndents)))
       return 'handled'
-    } else if (blockType !== 'atomic' && allowIndent && cursorIsAtFirst) {
-      editor.setValue(ContentUtils.insertText(editorState, '            ', null, {
+    } else if (blockType !== 'atomic') {
+      editor.setValue(ContentUtils.insertText(editorState, ' '.repeat(12), null, {
         type: 'INDENT',
         mutability: 'IMMUTABLE',
         data: {}

@@ -1908,8 +1908,8 @@ var handlers_keyCommandHandlers = function keyCommandHandlers(command, editorSta
     if (_blockType === 'code-block') {
       editor.setValue(external_braft_utils_["ContentUtils"].insertText(editorState, ' '.repeat(editor.editorProps.codeTabIndents)));
       return 'handled';
-    } else if (_blockType !== 'atomic' && allowIndent && cursorIsAtFirst) {
-      editor.setValue(external_braft_utils_["ContentUtils"].insertText(editorState, '            ', null, {
+    } else if (_blockType !== 'atomic') {
+      editor.setValue(external_braft_utils_["ContentUtils"].insertText(editorState, ' '.repeat(12), null, {
         type: 'INDENT',
         mutability: 'IMMUTABLE',
         data: {}
