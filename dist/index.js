@@ -1909,7 +1909,10 @@ var handlers_keyCommandHandlers = function keyCommandHandlers(command, editorSta
       editor.setValue(external_braft_utils_["ContentUtils"].insertText(editorState, ' '.repeat(editor.editorProps.codeTabIndents)));
       return 'handled';
     } else if (_blockType !== 'atomic' && allowIndent && cursorIsAtFirst) {
-      editor.setValue(external_braft_utils_["ContentUtils"].increaseSelectionIndent(editorState, 10));
+      editor.setValue(external_braft_utils_["ContentUtils"].insertText(editorState, '            ', null, {
+        type: 'INDENT',
+        mutability: 'IMMUTABLE'
+      }));
       return 'handled';
     }
   }
