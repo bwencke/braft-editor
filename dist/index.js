@@ -4895,7 +4895,7 @@ function (_React$Component) {
     });
 
     defineProperty_default()(assertThisInitialized_default()(assertThisInitialized_default()(_this)), "increaseIndent", function () {
-      _this.props.editor.setValue(external_braft_utils_["ContentUtils"].increaseSelectionIndent(_this.props.editorState, 10));
+      _this.props.editor.setValue(external_braft_utils_["ContentUtils"].increaseSelectionIndent(_this.props.editorState, 6));
 
       _this.props.editor.requestFocus();
     });
@@ -4926,7 +4926,7 @@ function (_React$Component) {
         type: "button",
         "data-title": language.controls.increaseIndent,
         disabled: currentIndent >= 10,
-        className: "control-item button button-indent-increase".concat(currentIndent > 0 && currentIndent < 10 ? ' active' : ''),
+        className: "control-item button button-indent-increase".concat(currentIndent > 0 && currentIndent < 6 ? ' active' : ''),
         onClick: this.increaseIndent
       }, external_react_default.a.createElement("i", {
         className: 'bfi-indent-increase'

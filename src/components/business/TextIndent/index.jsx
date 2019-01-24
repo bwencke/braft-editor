@@ -15,7 +15,7 @@ export default class TextAlign extends React.Component {
   }
 
   increaseIndent = () => {
-    this.props.editor.setValue(ContentUtils.increaseSelectionIndent(this.props.editorState, 10))
+    this.props.editor.setValue(ContentUtils.increaseSelectionIndent(this.props.editorState, 6))
     this.props.editor.requestFocus()
   }
 
@@ -36,7 +36,7 @@ export default class TextAlign extends React.Component {
           type='button'
           data-title={language.controls.increaseIndent}
           disabled={currentIndent >= 10}
-          className={`control-item button button-indent-increase${currentIndent > 0 && currentIndent < 10 ? ' active' : ''}`}
+          className={`control-item button button-indent-increase${currentIndent > 0 && currentIndent < 6 ? ' active' : ''}`}
           onClick={this.increaseIndent}
         >
           <i className={'bfi-indent-increase'}></i>
