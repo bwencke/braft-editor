@@ -35,7 +35,7 @@ export default class TextAlign extends React.Component {
           key={0}
           type='button'
           data-title={language.controls.increaseIndent}
-          disabled={currentIndent >= 10}
+          disabled={currentIndent >= 6}
           className={`control-item button button-indent-increase${currentIndent > 0 && currentIndent < 6 ? ' active' : ''}`}
           onClick={this.increaseIndent}
         >
