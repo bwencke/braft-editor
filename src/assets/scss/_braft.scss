@@ -209,33 +209,27 @@
 
   .bftd-1{
     text-indent: 4.4rem;
+    width: calc(100% - 4.4rem);
   }
   .bftd-2{
     text-indent: 8.8rem;
+    width: calc(100% - 8.8rem);
   }
   .bftd-3{
     text-indent: 13.2rem;
+    width: calc(100% - 13.2rem);
   }
   .bftd-4{
     text-indent: 17.6rem;
+    width: calc(100% - 17.6rem);
   }
   .bftd-5{
     text-indent: 22rem;
+    width: calc(100% - 22rem);
   }
   .bftd-6{
     text-indent: 26.4rem;
-  }
-  .bftd-7{
-    text-indent: 30.8rem;
-  }
-  .bftd-8{
-    text-indent: 35.2rem;
-  }
-  .bftd-9{
-    text-indent: 39.6rem;
-  }
-  .bftd-10{
-    text-indent: 44rem;
+    width: calc(100% - 26.4rem);
   }
 
   .bf-media{
