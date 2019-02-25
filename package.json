@@ -61,7 +61,7 @@
     "@babel/runtime": "^7.0.0",
     "braft-convert": "^2.1.10",
     "braft-finder": "^0.0.16",
-    "braft-utils": "^3.0.8",
+    "braft-utils": "git+https://github.com/bwencke/braft-utils.git#fix_decrease_indent",
     "draft-convert": "^2.0.0",
     "draft-js": "^0.10.3",
     "draft-js-multidecorators": "^1.0.0",

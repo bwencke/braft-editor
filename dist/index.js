@@ -4871,6 +4871,7 @@ var LetterSpacing_toggleLetterSpacing = function toggleLetterSpacing(event, prop
 
 
 
+var maxIndent = 10;
 
 var TextIndent_TextAlign =
 /*#__PURE__*/
@@ -4895,13 +4896,13 @@ function (_React$Component) {
     });
 
     defineProperty_default()(assertThisInitialized_default()(assertThisInitialized_default()(_this)), "increaseIndent", function () {
-      _this.props.editor.setValue(external_braft_utils_["ContentUtils"].increaseSelectionIndent(_this.props.editorState, 6));
+      _this.props.editor.setValue(external_braft_utils_["ContentUtils"].increaseSelectionIndent(_this.props.editorState, maxIndent));
 
       _this.props.editor.requestFocus();
     });
 
     defineProperty_default()(assertThisInitialized_default()(assertThisInitialized_default()(_this)), "decreaseIndent", function () {
-      _this.props.editor.setValue(external_braft_utils_["ContentUtils"].decreaseSelectionIndent(_this.props.editorState));
+      _this.props.editor.setValue(external_braft_utils_["ContentUtils"].decreaseSelectionIndent(_this.props.editorState, maxIndent));
 
       _this.props.editor.requestFocus();
     });
@@ -4925,8 +4926,8 @@ function (_React$Component) {
         key: 0,
         type: "button",
         "data-title": language.controls.increaseIndent,
-        disabled: currentIndent >= 6,
-        className: "control-item button button-indent-increase".concat(currentIndent > 0 && currentIndent < 6 ? ' active' : ''),
+        disabled: currentIndent >= maxIndent,
+        className: "control-item button button-indent-increase".concat(currentIndent > maxIndent && currentIndent < maxIndent ? ' active' : ''),
         onClick: this.increaseIndent
       }, external_react_default.a.createElement("i", {
         className: 'bfi-indent-increase'

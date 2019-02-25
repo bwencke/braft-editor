@@ -2,6 +2,8 @@ import React from 'react'
 import { ContentUtils } from 'braft-utils'
 import ControlGroup from 'components/business/ControlGroup'
 
+const maxIndent = 10
+
 export default class TextAlign extends React.Component {
 
   state = {
@@ -15,12 +17,12 @@ export default class TextAlign extends React.Component {
   }
 
   increaseIndent = () => {
-    this.props.editor.setValue(ContentUtils.increaseSelectionIndent(this.props.editorState, 6))
+    this.props.editor.setValue(ContentUtils.increaseSelectionIndent(this.props.editorState, maxIndent))
     this.props.editor.requestFocus()
   }
 
   decreaseIndent = () => {
-    this.props.editor.setValue(ContentUtils.decreaseSelectionIndent(this.props.editorState))
+    this.props.editor.setValue(ContentUtils.decreaseSelectionIndent(this.props.editorState, maxIndent))
     this.props.editor.requestFocus()
   }
 
@@ -35,8 +37,8 @@ export default class TextAlign extends React.Component {
           key={0}
           type='button'
           data-title={language.controls.increaseIndent}
-          disabled={currentIndent >= 6}
-          className={`control-item button button-indent-increase${currentIndent > 0 && currentIndent < 6 ? ' active' : ''}`}
+          disabled={currentIndent >= maxIndent}
+          className={`control-item button button-indent-increase${currentIndent > maxIndent && currentIndent < maxIndent ? ' active' : ''}`}
           onClick={this.increaseIndent}
         >
           <i className={'bfi-indent-increase'}></i>
