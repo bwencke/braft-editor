@@ -31,6 +31,9 @@
         outline: none;
       }
     }
+    .bf-hr{
+      pointer-events: none;
+    }
   }
 
   &.fullscreen{
@@ -245,7 +248,7 @@
   .bf-image{
     position: relative;
     img{
-      display: inline-block;
+      display: block;
       max-width: 100%;
       font-size: 0;
       resize: both;

@@ -51,6 +51,7 @@ export default {
     'align-left', 'align-center', 'align-right',
     'link', 'size', 'remove'
   ],
+  imageResizable: true,
   colors: [
     '#000000', '#333333', '#666666', '#999999', '#cccccc', '#ffffff',
     '#61a951', '#16a085', '#07a9fe', '#003ba5', '#8e44ad', '#f32784',
@@ -60,8 +61,10 @@ export default {
   colorPickerTheme: 'dark',
   colorPickerAutoHide: true,
   codeTabIndents: 2,
+  headings: ['header-one', 'header-two', 'header-three', 'header-four', 'header-five', 'header-six', 'unstyled'],
   textAligns: ['left', 'center', 'right', 'justify'],
   textBackgroundColor: true,
+  allowInsertLinkText: false,
   defaultLinkTarget: '',
   letterSpacings: [0, 1, 2, 3, 4, 5, 6],
   lineHeights: [1, 1.2, 1.5, 1.75, 2, 2.5, 3, 4],
@@ -87,8 +90,26 @@ export default {
     family: 'tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif'
   }],
   converts: {
-    unitExportFn: (value, type) => type === 'line-height' ? value : `${(value-2)/10}em`,
-    unitImportFn: (value, type) => type === 'line-height' ? value : value.replace('em', '')*10+2
+    unitExportFn: (value, type) => {
+      switch(type) {
+      case 'line-height':
+        return value
+      case 'text-indent':
+        return `${value*0.5}in`
+      default:
+        return `${(value-2)/10}em`
+      }
+    },
+    unitImportFn: (value, type) => {
+      switch(type) {
+      case 'line-height':
+        return value
+      case 'text-indent':
+        return value.replace('in', '')/0.5
+      default:
+        return value.replace('em', '')*10+2
+      }
+    }
   },
   emojis: [
     '🤣', '🙌', '💚', '💛', '👏', '😉', '💯',
@@ -124,5 +145,6 @@ export default {
   onBlur: null,
   onTab: null,
   onDelete: null,
-  onSave: null
+  onSave: null,
+  fixPlaceholder: false
 }

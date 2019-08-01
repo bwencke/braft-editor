@@ -22,6 +22,11 @@ const commandHookMap = {
   'editor-method': 'exec-editor-command'
 }
 
+const exclusiveInlineStyles = {
+  'superscript': 'subscript',
+  'subscript': 'superscript'
+}
+
 const mergeControls = (commonProps, builtControls, extensionControls, extendControls) => {
 
   extensionControls = extensionControls.map(item => typeof item === 'function' ? item(commonProps) : item)
@@ -40,7 +45,7 @@ const mergeControls = (commonProps, builtControls, extensionControls, extendCont
   }).concat(extensionControls.length ? 'separator' : '').concat(extensionControls.filter(item => {
     return !item.replace
   })).concat(extendControls.filter(item => {
-    return !item.replace
+    return typeof item === 'string' || !item.replace
   }))
 
 }
@@ -85,6 +90,7 @@ export default class ControlBar extends React.Component {
   applyControl (command, type, data = {}) {
 
     const hookReturns = this.props.hooks(commandHookMap[type] || type, command)(command)
+    let editorState = this.props.editorState
 
     if (hookReturns === false) {
       return false
@@ -95,11 +101,15 @@ export default class ControlBar extends React.Component {
     }
 
     if (type === 'inline-style') {
-      this.props.editor.setValue(ContentUtils.toggleSelectionInlineStyle(this.props.editorState, command))
+      let exclusiveInlineStyle = exclusiveInlineStyles[command]
+      if (exclusiveInlineStyle && ContentUtils.selectionHasInlineStyle(editorState, exclusiveInlineStyle)) {
+        editorState = ContentUtils.toggleSelectionInlineStyle(editorState, exclusiveInlineStyle)
+      }
+      this.props.editor.setValue(ContentUtils.toggleSelectionInlineStyle(editorState, command))
     } else if (type === 'block-type') {
-      this.props.editor.setValue(ContentUtils.toggleSelectionBlockType(this.props.editorState, command))
+      this.props.editor.setValue(ContentUtils.toggleSelectionBlockType(editorState, command))
     } else if (type === 'entity') {
-      this.props.editor.setValue(ContentUtils.toggleSelectionEntity(this.props.editorState, {
+      this.props.editor.setValue(ContentUtils.toggleSelectionEntity(editorState, {
         type: command,
         mutability: data.mutability || 'MUTABLE',
         data: data.data || {}
@@ -168,9 +178,9 @@ export default class ControlBar extends React.Component {
 
   render() {
 
-    const { editor, editorId, editorState, className, style, controls, media, extendControls, language, hooks, colors, colorPicker, colorPickerTheme, colorPickerAutoHide, fontSizes, fontFamilies, emojis, containerNode, lineHeights, letterSpacings, textAligns, textBackgroundColor, defaultLinkTarget } = this.props
+    const { editor, editorId, editorState, className, style, controls, media, extendControls, language, hooks, colors, colorPicker, colorPickerTheme, colorPickerAutoHide, headings, fontSizes, fontFamilies, emojis, getContainerNode, lineHeights, letterSpacings, textAligns, textBackgroundColor, allowInsertLinkText, defaultLinkTarget } = this.props
     const currentBlockType = ContentUtils.getSelectionBlockType(editorState)
-    const commonProps = { editor, editorId, editorState, language, containerNode, hooks }
+    const commonProps = { editor, editorId, editorState, language, getContainerNode, hooks }
 
     const renderedControls = []
     const editorControls = getEditorControls(language, editor)
@@ -209,6 +219,7 @@ export default class ControlBar extends React.Component {
             if (controlItem.type === 'headings') {
               return <HeadingPicker
                 key={index}
+                headings={headings}
                 current={currentBlockType}
                 onChange={(command) => this.applyControl(command, 'block-type')}
                 {...commonProps}
@@ -268,6 +279,7 @@ export default class ControlBar extends React.Component {
               return <LinkEditor
                 key={index}
                 defaultLinkTarget={defaultLinkTarget}
+                allowInsertLinkText={allowInsertLinkText}
                 {...commonProps}
               />
             } else if (controlItem.type === 'text-align') {
@@ -287,6 +299,7 @@ export default class ControlBar extends React.Component {
                   type='button'
                   key={index}
                   data-title={controlItem.title}
+                  disabled={controlItem.disabled}
                   className='control-item media button'
                   onClick={this.openBraftFinder}
                 >
@@ -318,6 +331,7 @@ export default class ControlBar extends React.Component {
                   type='button'
                   key={index}
                   data-title={controlItem.title}
+                  disabled={controlItem.disabled}
                   className={`control-item extend-control-item button ${controlItem.className || ''}`}
                   dangerouslySetInnerHTML={controlItem.html ? { __html: controlItem.html } : null}
                   onClick={(event) => {
@@ -349,6 +363,7 @@ export default class ControlBar extends React.Component {
                   type='button'
                   key={index}
                   data-title={controlItem.title}
+                  disabled={controlItem.disabled}
                   className={`control-item button ${controlItem.className || ''}`}
                   dangerouslySetInnerHTML={controlItem.html ? { __html: controlItem.html } : null}
                   onClick={(event) => controlItem.onClick && controlItem.onClick(event)}

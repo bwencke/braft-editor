@@ -35,7 +35,6 @@ export const keyCommandHandlers = (command, editorState, editor) => {
   }
 
   if (command === 'tab') {
-
     const blockType = ContentUtils.getSelectionBlockType(editorState)
 
     if (blockType === 'code-block') {
@@ -47,6 +46,18 @@ export const keyCommandHandlers = (command, editorState, editor) => {
         mutability: 'IMMUTABLE',
         data: {}
       }))
+    } else if (blockType === 'ordered-list-item' || blockType === 'unordered-list-item') {
+      const newEditorState = RichUtils.onTab(
+        event,
+        editorState,
+        4,
+      )
+      if (newEditorState !== editorState) {
+        editor.setValue(newEditorState)
+      }
+      return 'handled'
+    } else if (blockType !== 'atomic' && allowIndent && cursorIsAtFirst) {
+      editor.setValue(ContentUtils.increaseSelectionIndent(editorState))
       return 'handled'
     }
 
@@ -183,12 +194,25 @@ export const dropHandlers = (selectionState, dataTransfer, editor) => {
 
 export const handleFiles = (files, editor) => {
 
-  const { pasteImage, imagePasteLimit } = { ...editor.constructor.defaultProps.media, ...editor.editorProps.media }
+  const { pasteImage, validateFn, imagePasteLimit } = { ...editor.constructor.defaultProps.media, ...editor.editorProps.media }
 
   pasteImage && files.slice(0, imagePasteLimit).forEach((file) => {
-    file && file.type.indexOf('image') > -1 && editor.braftFinder.uploadImage(file, image => {
-      editor.isLiving && editor.setValue(ContentUtils.insertMedias(editor.state.editorState, [image]))
-    })
+
+    if (file && file.type.indexOf('image') > -1 && editor.braftFinder) {
+      let validateResult = validateFn ? validateFn(file) : true
+      if (validateResult instanceof Promise) {
+        validateResult.then(() => {
+          editor.braftFinder.uploadImage(file, image => {
+            editor.isLiving && editor.setValue(ContentUtils.insertMedias(editor.state.editorState, [image]))
+          })
+        })
+      } else if (validateResult) {
+        editor.braftFinder.uploadImage(file, image => {
+          editor.isLiving && editor.setValue(ContentUtils.insertMedias(editor.state.editorState, [image]))
+        })
+      }
+    }
+
   })
 
   if (files[0] && files[0].type.indexOf('image') > -1 && pasteImage) {
@@ -196,7 +220,7 @@ export const handleFiles = (files, editor) => {
   }
 
   return 'not-handled'
-  
+
 }
 
 export const droppedFilesHandlers = (selectionState, files, editor) => {

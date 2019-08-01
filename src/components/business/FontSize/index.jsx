@@ -39,8 +39,8 @@ export default (props) => {
   return (
     <DropDown
       autoHide={true}
-      caption={caption}
-      containerNode={props.containerNode}
+      caption={caption || props.defaultCaption}
+      getContainerNode={props.getContainerNode}
       title={props.language.controls.fontSize}
       ref={(instance) => dropDownInstance = instance}
       className={'control-item dropdown bf-font-size-dropdown'}

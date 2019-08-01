@@ -14,8 +14,10 @@ export default class DropDown extends React.Component {
 
   componentDidMount () {
 
-    document.body.addEventListener('click', this.registerClickEvent)
-    this.responsiveResolveId = ResponsiveHelper.resolve(this.fixDropDownPosition)
+    if (document) {
+      document.body.addEventListener('click', this.registerClickEvent)
+      this.responsiveResolveId = ResponsiveHelper.resolve(this.fixDropDownPosition)
+    }
 
   }
 
@@ -37,8 +39,10 @@ export default class DropDown extends React.Component {
 
   componentWillUnmount () {
 
-    document.body.removeEventListener('click', this.registerClickEvent)
-    ResponsiveHelper.unresolve(this.responsiveResolveId)
+    if (document) {
+      document.body.removeEventListener('click', this.registerClickEvent)
+      ResponsiveHelper.unresolve(this.responsiveResolveId)
+    }
 
   }
 
@@ -93,7 +97,7 @@ export default class DropDown extends React.Component {
 
   fixDropDownPosition = () => {
 
-    const viewRect = this.props.containerNode.getBoundingClientRect()
+    const viewRect = this.props.getContainerNode().getBoundingClientRect()
     const handlerRect = this.dropDownHandlerElement.getBoundingClientRect()
     const contentRect = this.dropDownContentElement.getBoundingClientRect()
 

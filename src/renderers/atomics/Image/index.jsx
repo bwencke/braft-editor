@@ -15,11 +15,63 @@ export default class Image extends React.Component {
     tempWidth: null,
     tempHeight: null
   }
+  initialLeft
+  initialTop
+  initialWidth
+  initialHeight
+  reSizeType
+
+  changeSize = e => {
+    let type = this.reSizeType
+    if(!this.initialLeft){
+      this.initialLeft = e.screenX
+      this.initialTop = e.screenY
+    }
+    if(type === 'rightbottom'){
+      this.initialHeight +=  e.screenY-this.initialTop
+      this.initialWidth +=  e.screenX-this.initialLeft
+    }
+    if(type === 'leftbottom'){
+      this.initialHeight +=  e.screenY-this.initialTop
+      this.initialWidth +=  -e.screenX+this.initialLeft
+    }
+    
+   
+    this.initialLeft = e.screenX
+    this.initialTop = e.screenY
+  }
+
+  moveImage = (e) => {
+    
+    this.changeSize(e)
+
+    this.setState({
+      tempWidth: Math.abs(this.initialWidth),
+      tempHeight: Math.abs(this.initialHeight)
+    })
+  }
+
+  upImage = () => {
+    this.confirmImageSize()
+    document.removeEventListener('mousemove', this.moveImage)
+    document.removeEventListener('mouseup', this.upImage)
+  }
+
+  repareChangeSize = type => (e) => {
+    this.reSizeType = type
+    const imageRect = this.imageElement.getBoundingClientRect()
+    this.initialLeft = this.initialTop = 0
+    this.initialWidth = imageRect.width
+    this.initialHeight = imageRect.height
+    e.preventDefault()
+    document.addEventListener('mousemove', this.moveImage)
+    document.addEventListener('mouseup', this.upImage)
+  }
 
   render () {
 
-    const { mediaData, language, imageControls } = this.props
-    const { toolbarVisible, toolbarOffset, linkEditorVisible, sizeEditorVisible } = this.state
+    const { mediaData, language, imageControls, imageResizable } = this.props
+    const { toolbarVisible, toolbarOffset, linkEditorVisible, sizeEditorVisible, tempWidth, tempHeight } = this.state
     const blockData = this.props.block.getData()
 
     let float = blockData.get('float')
@@ -52,7 +104,7 @@ export default class Image extends React.Component {
           </a>
         )
       } else if (item && (item.render || item.text)) {
-        return item.render ? item.render(mediaData) : <a key={index} href='javascript:void(0);' onClick={() => item.onClick && this.executeCommand(item.onClick)}>{item.text}</a>
+        return item.render ? item.render(mediaData, this.props.block) : <a key={index} href='javascript:void(0);' onClick={() => item.onClick && this.executeCommand(item.onClick)}>{item.text}</a>
       } else {
         return null
       }
@@ -98,8 +150,8 @@ export default class Image extends React.Component {
               {sizeEditorVisible ? (
                 <div className='bf-image-size-editor'>
                   <div className='editor-input-group'>
-                    <input type='text' placeholder={language.base.width} onKeyDown={this.handleSizeInputKeyDown} onChange={this.setImageWidth} defaultValue={width}/>
-                    <input type='text' placeholder={language.base.height} onKeyDown={this.handleSizeInputKeyDown} onChange={this.setImageHeight} defaultValue={height}/>
+                    <input type='text' onDragStart={this.preventDragEvent} placeholder={language.base.width} onKeyDown={this.handleSizeInputKeyDown} onChange={this.setImageWidth} defaultValue={width}/>
+                    <input type='text' onDragStart={this.preventDragEvent} placeholder={language.base.height} onKeyDown={this.handleSizeInputKeyDown} onChange={this.setImageHeight} defaultValue={height}/>
                     <button type='button' onClick={this.confirmImageSize}>{language.base.confirm}</button>
                   </div>
                 </div>
@@ -108,13 +160,21 @@ export default class Image extends React.Component {
               <i style={{marginLeft: toolbarOffset * -1}} className='bf-media-toolbar-arrow'></i>
             </div>
           ) : null}
-          <img
-            ref={instance => this.imageElement = instance}
-            src={url}
-            width={width}
-            height={height}
-            {...meta}
-          />
+          <div style={{position:'relative',width: `${width}px`,height: `${height}px`,display: 'inline-block'}}>
+            <img
+              ref={instance => this.imageElement = instance}
+              src={url}
+              width={width}
+              height={height}
+              {...meta}
+            />
+            {toolbarVisible && imageResizable ? <div className='bf-csize-icon right-bottom' onMouseDown={this.repareChangeSize('rightbottom')} /> : null}
+            {toolbarVisible && imageResizable ? <div className='bf-csize-icon left-bottom' onMouseDown={this.repareChangeSize('leftbottom')} /> : null}
+            {imageResizable ? <div
+              className={`bf-pre-csize ${this.reSizeType}`} 
+              style={{width: `${tempWidth}px`, height:`${tempHeight}px`}}
+            /> : null}
+          </div>
         </div>
         {clearFix && <div className='clearfix' style={{clear:'both',height:0,lineHeight:0,float:'none'}}></div>}
       </div>
@@ -132,11 +192,14 @@ export default class Image extends React.Component {
 
   calcToolbarOffset () {
 
-    if (!this.props.containerNode) {
+    const { getContainerNode, containerNode } = this.props
+    const container = getContainerNode ? getContainerNode() : containerNode
+
+    if (!container) {
       return 0
     }
 
-    const viewRect = this.props.containerNode.querySelector('.bf-content').getBoundingClientRect()
+    const viewRect = container.querySelector('.bf-content').getBoundingClientRect()
     const toolbarRect = this.toolbarElement.getBoundingClientRect()
     const imageRect = this.imageElement.getBoundingClientRect()
 
@@ -151,6 +214,11 @@ export default class Image extends React.Component {
       return 0
     }
 
+  }
+
+  preventDragEvent = (event) => {
+    event.stopPropagation()
+    event.preventDefault()
   }
 
   handleDragStart = () => {
@@ -185,16 +253,18 @@ export default class Image extends React.Component {
   }
 
   executeCommand = (command) => {
+
     if (typeof command === 'string') {
       const [method, param] = command.split('|')
       this[method] && this[method](param)
     } else if (typeof command === 'function') {
-      command(this.props.block, this.props.editorState)
+      command(this.props.block, this.props.mediaData, this.props.editor.getValue())
     }
+
   }
 
   removeImage = () => {
-    this.props.editor.setValue(ContentUtils.removeBlock(this.props.editorState, this.props.block))
+    this.props.editor.setValue(ContentUtils.removeBlock(this.props.editor.getValue(), this.props.block))
     this.unlockEditor()
   }
 
@@ -219,7 +289,6 @@ export default class Image extends React.Component {
     } else {
       return
     }
-
   }
 
   setImageLink = (e) => {
@@ -229,21 +298,38 @@ export default class Image extends React.Component {
 
   setImageLinkTarget (link_target) {
 
-    link_target = link_target === '_blank' ? '' : '_blank'
-    this.props.editor.setValue(ContentUtils.setMediaData(this.props.editorState, this.props.entityKey, { link_target }))
-    window.setImmediate(this.props.editor.forceRender)
+    const hookReturns = this.props.hooks('set-image-link-target', link_target)(link_target)
 
+    if (hookReturns === false) {
+      return false
+    }
+
+    if (typeof hookReturns === 'string') {
+      link_target = hookReturns
+    }
+
+    link_target = link_target === '_blank' ? '' : '_blank'
+    this.props.editor.setValue(ContentUtils.setMediaData(this.props.editor.getValue(), this.props.entityKey, { link_target }))
+    window.setImmediate(this.props.editor.forceRender)
   }
 
   confirmImageLink = () => {
 
-    const { tempLink: link } = this.state
+    let { tempLink: link } = this.state
+    const hookReturns = this.props.hooks('set-image-link', link)(link)
 
-    if (link !== null) {
-      this.props.editor.setValue(ContentUtils.setMediaData(this.props.editorState, this.props.entityKey, { link }))
-      window.setImmediate(this.props.editor.forceRender)
+    if (hookReturns === false) {
+      return false
     }
 
+    if (typeof hookReturns === 'string') {
+      link = hookReturns
+    }
+
+    if (link !== null) {
+      this.props.editor.setValue(ContentUtils.setMediaData(this.props.editor.getValue(), this.props.entityKey, { link }))
+      window.setImmediate(this.props.editor.forceRender)
+    }
   }
 
   handleSizeInputKeyDown = (e) => {
@@ -265,7 +351,6 @@ export default class Image extends React.Component {
     })
 
     return
-
   }
 
   setImageHeight = ({ currentTarget }) => {
@@ -279,29 +364,59 @@ export default class Image extends React.Component {
     })
 
     return
-
   }
 
   confirmImageSize = () => {
 
     const { tempWidth: width, tempHeight: height } = this.state
-    const newImageSize = {}
+    let newImageSize = {}
 
     width !== null && (newImageSize.width = width)
     height !== null && (newImageSize.height = height)
 
-    this.props.editor.setValue(ContentUtils.setMediaData(this.props.editorState, this.props.entityKey, newImageSize))
-    window.setImmediate(this.props.editor.forceRender)
+    const hookReturns = this.props.hooks('set-image-size', newImageSize)(newImageSize)
 
+    if (hookReturns === false) {
+      return false
+    }
+
+    if (hookReturns && (hookReturns.width || hookReturns.height)) {
+      newImageSize = hookReturns
+    }
+
+    this.props.editor.setValue(ContentUtils.setMediaData(this.props.editor.getValue(), this.props.entityKey, newImageSize))
+    window.setImmediate(this.props.editor.forceRender)
   }
 
   setImageFloat = (float) => {
-    this.props.editor.setValue(ContentUtils.setMediaPosition(this.props.editorState, this.props.block, { float }))
+
+    const hookReturns = this.props.hooks('set-image-float', float)(float)
+
+    if (hookReturns === false) {
+      return false
+    }
+
+    if (typeof hookReturns === 'string') {
+      float = hookReturns
+    }
+
+    this.props.editor.setValue(ContentUtils.setMediaPosition(this.props.editor.getValue(), this.props.block, { float }))
     this.unlockEditor()
   }
 
   setImageAlignment = (alignment) => {
-    this.props.editor.setValue(ContentUtils.setMediaPosition(this.props.editorState, this.props.block, { alignment }))
+
+    const hookReturns = this.props.hooks('set-image-alignment', alignment)(alignment)
+
+    if (hookReturns === false) {
+      return false
+    }
+
+    if (typeof hookReturns === 'string') {
+      alignment = hookReturns
+    }
+
+    this.props.editor.setValue(ContentUtils.setMediaPosition(this.props.editor.getValue(), this.props.block, { alignment }))
     this.unlockEditor()
   }
 
@@ -321,7 +436,6 @@ export default class Image extends React.Component {
         this.setState({ toolbarOffset: this.calcToolbarOffset() })
       })
     }
-
   }
 
   hideToolbar = (event) => {
@@ -334,7 +448,6 @@ export default class Image extends React.Component {
       this.unlockEditor()
       this.props.editor.requestFocus()
     })
-
   }
 
 }

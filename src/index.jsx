@@ -40,10 +40,16 @@ BraftEditor.createEditorState = EditorState.createFrom = (content, options = {})
     editorState = convertRawToEditorState(content, getDecorators(options.editorId))
   } else if (typeof content === 'string') {
     try {
-      editorState = EditorState.createFrom(JSON.parse(content), options)
+      if (/^(-)?\d+$/.test(content)) {
+        editorState = convertHTMLToEditorState(content, getDecorators(options.editorId), options, 'create')
+      } else {
+        editorState = EditorState.createFrom(JSON.parse(content), options)
+      }
     } catch (error) {
       editorState = convertHTMLToEditorState(content, getDecorators(options.editorId), options, 'create')
     }
+  } else if (typeof content === 'number') {
+    editorState = convertHTMLToEditorState(content.toLocaleString().replace(/,/g, ''), getDecorators(options.editorId), options, 'create')
   } else {
     editorState = EditorState.createEmpty(getDecorators(options.editorId))
   }

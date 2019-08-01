@@ -1,5 +1,52 @@
 ### 历史更新记录
 
+- 2019-06-20 v2.3.7
+  - 修复问题[#542](https://github.com/margox/braft-editor/issues/542)、[#541](https://github.com/margox/braft-editor/issues/541)、[#467](https://github.com/margox/braft-editor/issues/467)
+  - 修复问题[#512](https://github.com/margox/braft-editor/issues/512)并新增imageResizable属性，允许关闭图片的拖动调整尺寸功能
+- 2019-06-18 v2.3.6
+  - 支持不选择文字的情况下直接插入链接
+  - 新增`allowInsertLinkText`属性，允许直接插入链接时输入链接文字，默认`false`
+- 2019-06-14 v2.3.5
+  - 完善index.d.ts
+- 2019-06-11 v2.3.4
+  - 支持部分更多自定义html属性的保留(需要升级braft-convert至v2.3.0)
+  - 加入韩语(kr)、日语(jpn)、土耳其语(tr)
+  - 加入更多[hooks](https://www.yuque.com/braft-editor/be/gz44tn#gug9gs)支持
+- 2019-06-11 v2.3.3
+  - 支持部分更多自定义html属性的保留(需要升级braft-convert至v2.1.13)
+  - 加入更多[hooks](https://www.yuque.com/braft-editor/be/gz44tn#gug9gs)支持
+- 2019-05-28 v2.3.2
+  - 修复传入RAW字符串无法正常解析为问题
+- 2019-05-20 v2.3.1
+  - 修复v2.3.0的致命bug
+- 2019-05-20 v2.3.0
+  - 支持嵌套列表以及部分内部细节优化，感谢[SyMind](https://github.com/SyMind)的贡献:[PR#486](https://github.com/margox/braft-editor/pull/486),[PR#485](https://github.com/margox/braft-editor/pull/485)
+  - 优化在SSR中使用的问题
+- 2019-04-29 v2.2.10
+  - 图片支持拖动调整大小，感谢[ArthasDragon](https://github.com/margox/braft-editor/pull/424)的贡献！
+  - 优化使用纯数字初始化编辑器内容异常的问题，感谢[WzFFzW](https://github.com/margox/braft-editor/pull/446)的贡献！
+  - 新增fixPlaceholder属性(Boolean)，用于修复部分情况下placeholder文本显示异常的问题，默认false
+  - 优化forceRender
+- 2019-03-06 v2.2.9
+  - 修改index.d.ts
+- 2019-02-22 v2.2.7
+  - 新增用于美化输出HTML的样板CSS文件(`node_modules/braft-editor/dist/output.css`)
+- 2019-02-22 v2.2.6
+  - 优化blockRenerMap属性，支持传入一个返回blockRenerMap对象的函数
+  - 优化上下标样式的设置
+  - 优化编辑器内文本缩进和文本对齐同事存在时的显示效果
+- 2019-01-11 v2.2.4
+  - 新增editorId属性，作用与id属性完全一样，用于解决在Ant Design Form组件中id属性会被覆盖导致无法正常使用扩展模块的问题
+- 2019-01-11 v2.2.2
+  - 优化音视频和嵌入式媒体的播放交互，改为在模态框中播放
+- 2019-01-06 v2.2.1
+  - 完善index.d.ts([PR#340](https://github.com/margox/braft-editor/pull/340))
+- 2018-12-29 v2.2.0
+  - 新增d.ts文件，在TypeScript项目中使用更友好，感谢[幅川大佬](https://github.com/weifuchuan)的贡献！
+  - 修复弹窗组件中的输入框无法使用的问题
+  - 其他优化和问题修复：[Issue#336](https://github.com/margox/braft-editor/issues/336),[Issue#331](https://github.com/margox/braft-editor/issues/331),[Issue#328](https://github.com/margox/braft-editor/issues/328)
+- 2018-12-24 v2.1.36
+  - 修复弹窗组件偶尔无法正常关闭的问题
 - 2018-12-03 v2.1.34
   - 修复v2.1.32**优化编辑器内复制粘贴**后导致复制编辑器内容粘贴到其他地方异常的问题
 - 2018-11-30 v2.1.33
