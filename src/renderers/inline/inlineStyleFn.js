@@ -16,7 +16,7 @@ export default (props, options) => (styles, block) => {
   output = customStyleFn ? customStyleFn(styles, block, output) : {}
 
   styles.forEach((style) => {
-
+    console.log(style)
     if (style.indexOf('COLOR-') === 0) {
       output.color = '#' + getStyleValue(style)
     } else if (style.indexOf('BGCOLOR-') === 0) {

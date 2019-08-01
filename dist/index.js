@@ -2153,6 +2153,9 @@ var external_immutable_default = /*#__PURE__*/__webpack_require__.n(external_imm
   }],
   converts: {
     unitExportFn: function unitExportFn(value, type) {
+      console.log(value);
+      console.log(type);
+
       switch (type) {
         case 'line-height':
           return value;
@@ -2165,6 +2168,9 @@ var external_immutable_default = /*#__PURE__*/__webpack_require__.n(external_imm
       }
     },
     unitImportFn: function unitImportFn(value, type) {
+      console.log(value);
+      console.log(type);
+
       switch (type) {
         case 'line-height':
           return value;
@@ -4432,6 +4438,8 @@ var getStyleValue = function getStyleValue(style) {
     });
     output = customStyleFn ? customStyleFn(styles, block, output) : {};
     styles.forEach(function (style) {
+      console.log(style);
+
       if (style.indexOf('COLOR-') === 0) {
         output.color = '#' + getStyleValue(style);
       } else if (style.indexOf('BGCOLOR-') === 0) {
