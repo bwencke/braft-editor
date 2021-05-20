@@ -166,7 +166,7 @@ export default {
   ],
   converts: {
     unitExportFn: (value, type) => type === 'line-height' ? value : `${(value-2)/10}em`,
-    unitImportFn: (value, type) => type === 'line-height' ? value : value.replace('em', '')*10+2
+    unitImportFn: (value, type) => type === 'line-height' ? value : value.replace('em', '')*10+2,
   },
   emojis: [
     '🤣',

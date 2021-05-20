@@ -67,11 +67,13 @@ export const keyCommandHandlers = (command, editorState, editor) => {
       return 'handled';
     }
     if (blockType !== 'atomic' && allowIndent && cursorIsAtFirst) {
-      editor.setValue(ContentUtils.insertText(editorState, ' '.repeat(12), null, {
-        type: 'INDENT',
-        mutability: 'IMMUTABLE',
-        data: {}
-      }))
+      editor.setValue(
+        ContentUtils.insertText(editorState, ' '.repeat(12), null, {
+          type: 'INDENT',
+          mutability: 'IMMUTABLE',
+          data: {},
+        }),
+      );
       return 'handled';
     }
   }

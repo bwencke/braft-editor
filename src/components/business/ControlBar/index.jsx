@@ -288,7 +288,10 @@ export default class ControlBar extends React.Component {
 
     this.allControls = allControls;
 
-    const styleObject = Object.assign({}, style, editor.isFocused ? null : { display: 'none' })
+    const styleObject = {
+      ...style,
+      ...(editor.isFocused ? null : { display: 'none' }),
+    };
 
     return (
       <div
