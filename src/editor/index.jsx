@@ -595,7 +595,6 @@ class BraftEditor extends React.Component {
       handlePastedText: this.handlePastedText,
       handlePastedFiles: this.handlePastedFiles,
       onChange: this.onChange,
-      onTab: keyBindingFn,
       onFocus: this.onFocus,
       onBlur: this.onBlur,
       blockRenderMap,

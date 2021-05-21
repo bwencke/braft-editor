@@ -8435,7 +8435,6 @@ var editor_BraftEditor = /*#__PURE__*/function (_React$Component) {
         handlePastedText: this.handlePastedText,
         handlePastedFiles: this.handlePastedFiles,
         onChange: this.onChange,
-        onTab: keyBindingFn,
         onFocus: this.onFocus,
         onBlur: this.onBlur,
         blockRenderMap: blockRenderMap,
