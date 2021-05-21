@@ -3,7 +3,7 @@ import { keyCommandHandlers } from 'configs/handlers';
 // TODO
 // Allow custom shortcut settings
 
-const getKeyBindingFn = (customKeyBindingFn, editorState) => (event) => {
+const getKeyBindingFn = (customKeyBindingFn, editorState, editorProps) => (event) => {
   if (
     event.keyCode === 83 &&
     (KeyBindingUtil.hasCommandModifier(event) ||
@@ -15,6 +15,9 @@ const getKeyBindingFn = (customKeyBindingFn, editorState) => (event) => {
   if (event.key === 'Tab') {
     if (keyCommandHandlers('tab', editorState, this) === 'handled') {
       event.preventDefault();
+    }
+    if (editorProps && editorProps.onTab) {
+      editorProps.onTab(event);
     }
   }
 

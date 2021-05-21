@@ -5762,7 +5762,7 @@ var keybindings_this = undefined;
  // TODO
 // Allow custom shortcut settings
 
-var keybindings_getKeyBindingFn = function getKeyBindingFn(customKeyBindingFn, editorState) {
+var keybindings_getKeyBindingFn = function getKeyBindingFn(customKeyBindingFn, editorState, editorProps) {
   return function (event) {
     if (event.keyCode === 83 && (external_draft_js_["KeyBindingUtil"].hasCommandModifier(event) || external_draft_js_["KeyBindingUtil"].isCtrlKeyCommand(event))) {
       return 'braft-save';
@@ -5771,6 +5771,10 @@ var keybindings_getKeyBindingFn = function getKeyBindingFn(customKeyBindingFn, e
     if (event.key === 'Tab') {
       if (handlers_keyCommandHandlers('tab', editorState, keybindings_this) === 'handled') {
         event.preventDefault();
+      }
+
+      if (editorProps && editorProps.onTab) {
+        editorProps.onTab(event);
       }
     }
 
@@ -8020,16 +8024,6 @@ var editor_BraftEditor = /*#__PURE__*/function (_React$Component) {
       });
     });
 
-    defineProperty_default()(assertThisInitialized_default()(_this), "onTab", function (event) {
-      if (handlers_keyCommandHandlers('tab', _this.state.editorState, assertThisInitialized_default()(_this)) === 'handled') {
-        event.preventDefault();
-      }
-
-      if (_this.editorProps.onTab) {
-        _this.editorProps.onTab(event);
-      }
-    });
-
     defineProperty_default()(assertThisInitialized_default()(_this), "onFocus", function () {
       _this.isFocused = true;
 
@@ -8411,7 +8405,7 @@ var editor_BraftEditor = /*#__PURE__*/function (_React$Component) {
         unitExportFn: unitExportFn,
         customStyleFn: this.editorProps.customStyleFn
       });
-      var keyBindingFn = keybindings(this.editorProps.keyBindingFn, this.state.editorState);
+      var keyBindingFn = keybindings(this.editorProps.keyBindingFn, this.state.editorState, this.editorProps);
       var mixedProps = {};
 
       if (this.state.editorLocked || this.editorProps.disabled || this.editorProps.readOnly || this.editorProps.draftProps.readOnly) {

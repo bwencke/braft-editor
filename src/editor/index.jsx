@@ -323,15 +323,6 @@ class BraftEditor extends React.Component {
     );
   };
 
-  onTab = (event) => {
-    if (keyCommandHandlers('tab', this.state.editorState, this) === 'handled') {
-      event.preventDefault();
-    }
-    if (this.editorProps.onTab) {
-      this.editorProps.onTab(event);
-    }
-  };
-
   onFocus = () => {
     this.isFocused = true;
     if (this.editorProps.onFocus) {
@@ -557,7 +548,7 @@ class BraftEditor extends React.Component {
       customStyleFn: this.editorProps.customStyleFn,
     });
 
-    const keyBindingFn = getKeyBindingFn(this.editorProps.keyBindingFn, this.state.editorState);
+    const keyBindingFn = getKeyBindingFn(this.editorProps.keyBindingFn, this.state.editorState, this.editorProps);
 
     const mixedProps = {};
 
