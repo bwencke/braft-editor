@@ -246,8 +246,8 @@ class BraftEditor extends React.Component {
 
   componentWillUnmount() {
     this.isLiving = false;
-    if (this.controlBarInstance) {
-      this.controlBarInstance.closeBraftFinder();
+    if (this.controlBarInstance.current) {
+      this.controlBarInstance.current.closeBraftFinder();
     }
   }
 
