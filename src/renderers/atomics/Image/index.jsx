@@ -79,7 +79,7 @@ class Image extends React.Component {
 
   repareChangeSize = (type) => (e) => {
     this.reSizeType = type;
-    const imageRect = this.imageElement.getBoundingClientRect();
+    const imageRect = this.imageElement.current.getBoundingClientRect();
     this.initialTop = 0;
     this.initialLeft = 0;
     this.initialWidth = imageRect.width;
@@ -109,8 +109,8 @@ class Image extends React.Component {
     const viewRect = container
       .querySelector('.bf-content')
       .getBoundingClientRect();
-    const toolbarRect = this.toolbarElement.getBoundingClientRect();
-    const imageRect = this.imageElement.getBoundingClientRect();
+    const toolbarRect = this.toolbarElement.current.getBoundingClientRect();
+    const imageRect = this.imageElement.current.getBoundingClientRect();
 
     const right =
       viewRect.right -

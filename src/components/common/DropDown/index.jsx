@@ -16,7 +16,7 @@ class DropDown extends React.Component {
   componentDidMount() {
     if (document) {
       document.body.addEventListener('click', this.registerClickEvent);
-      this.responsiveResolveId = ResponsiveHelper.resolve(
+      this.responsiveResolveId.current = ResponsiveHelper.resolve(
         this.fixDropDownPosition,
       );
     }
@@ -38,7 +38,7 @@ class DropDown extends React.Component {
   componentWillUnmount() {
     if (document) {
       document.body.removeEventListener('click', this.registerClickEvent);
-      ResponsiveHelper.unresolve(this.responsiveResolveId);
+      ResponsiveHelper.unresolve(this.responsiveResolveId.current);
     }
   }
 
@@ -50,8 +50,8 @@ class DropDown extends React.Component {
 
   fixDropDownPosition = () => {
     const viewRect = this.props.getContainerNode().getBoundingClientRect();
-    const handlerRect = this.dropDownHandlerElement.getBoundingClientRect();
-    const contentRect = this.dropDownContentElement.getBoundingClientRect();
+    const handlerRect = this.dropDownHandlerElement.current.getBoundingClientRect();
+    const contentRect = this.dropDownContentElement.current.getBoundingClientRect();
 
     let offset = 0;
     let right =
@@ -77,8 +77,8 @@ class DropDown extends React.Component {
     const { active } = this.state;
 
     if (
-      this.dropDownContentElement.contains(event.target) ||
-      this.dropDownHandlerElement.contains(event.target)
+      this.dropDownContentElement.current.contains(event.target) ||
+      this.dropDownHandlerElement.current.contains(event.target)
     ) {
       return false;
     }

@@ -3151,7 +3151,7 @@ var Image_Image = /*#__PURE__*/function (_React$Component) {
       return function (e) {
         _this.reSizeType = type;
 
-        var imageRect = _this.imageElement.getBoundingClientRect();
+        var imageRect = _this.imageElement.current.getBoundingClientRect();
 
         _this.initialTop = 0;
         _this.initialLeft = 0;
@@ -3485,8 +3485,8 @@ var Image_Image = /*#__PURE__*/function (_React$Component) {
       }
 
       var viewRect = container.querySelector('.bf-content').getBoundingClientRect();
-      var toolbarRect = this.toolbarElement.getBoundingClientRect();
-      var imageRect = this.imageElement.getBoundingClientRect();
+      var toolbarRect = this.toolbarElement.current.getBoundingClientRect();
+      var imageRect = this.imageElement.current.getBoundingClientRect();
       var right = viewRect.right - (imageRect.right - imageRect.width / 2 + toolbarRect.width / 2);
       var left = imageRect.left + imageRect.width / 2 - toolbarRect.width / 2 - viewRect.left;
 
@@ -5964,9 +5964,9 @@ var DropDown_DropDown = /*#__PURE__*/function (_React$Component) {
     defineProperty_default()(assertThisInitialized_default()(_this), "fixDropDownPosition", function () {
       var viewRect = _this.props.getContainerNode().getBoundingClientRect();
 
-      var handlerRect = _this.dropDownHandlerElement.getBoundingClientRect();
+      var handlerRect = _this.dropDownHandlerElement.current.getBoundingClientRect();
 
-      var contentRect = _this.dropDownContentElement.getBoundingClientRect();
+      var contentRect = _this.dropDownContentElement.current.getBoundingClientRect();
 
       var offset = 0;
       var right = handlerRect.right - handlerRect.width / 2 + contentRect.width / 2;
@@ -5991,7 +5991,7 @@ var DropDown_DropDown = /*#__PURE__*/function (_React$Component) {
       var autoHide = _this.props.autoHide;
       var active = _this.state.active;
 
-      if (_this.dropDownContentElement.contains(event.target) || _this.dropDownHandlerElement.contains(event.target)) {
+      if (_this.dropDownContentElement.current.contains(event.target) || _this.dropDownHandlerElement.current.contains(event.target)) {
         return false;
       }
 
@@ -6030,7 +6030,7 @@ var DropDown_DropDown = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       if (document) {
         document.body.addEventListener('click', this.registerClickEvent);
-        this.responsiveResolveId = responsive.resolve(this.fixDropDownPosition);
+        this.responsiveResolveId.current = responsive.resolve(this.fixDropDownPosition);
       }
     } // eslint-disable-next-line camelcase
 
@@ -6053,7 +6053,7 @@ var DropDown_DropDown = /*#__PURE__*/function (_React$Component) {
     value: function componentWillUnmount() {
       if (document) {
         document.body.removeEventListener('click', this.registerClickEvent);
-        responsive.unresolve(this.responsiveResolveId);
+        responsive.unresolve(this.responsiveResolveId.current);
       }
     }
   }, {
@@ -6214,11 +6214,11 @@ var LinkEditor_LinkEditor = /*#__PURE__*/function (_React$Component) {
     });
 
     defineProperty_default()(assertThisInitialized_default()(_this), "handleCancel", function () {
-      _this.dropDownInstance.hide();
+      _this.dropDownInstance.current.hide();
     });
 
     defineProperty_default()(assertThisInitialized_default()(_this), "handleUnlink", function () {
-      _this.dropDownInstance.hide();
+      _this.dropDownInstance.current.hide();
 
       _this.props.editor.setValue(external_braft_utils_["ContentUtils"].toggleSelectionLink(_this.props.editorState, false));
     });
@@ -6239,7 +6239,7 @@ var LinkEditor_LinkEditor = /*#__PURE__*/function (_React$Component) {
         target: target
       });
 
-      _this.dropDownInstance.hide();
+      _this.dropDownInstance.current.hide();
 
       _this.props.editor.requestFocus();
 
@@ -6490,7 +6490,7 @@ var Headings_Headings = function Headings(props) {
       className: "menu-item".concat(isActive ? ' active' : ''),
       onClick: function onClick() {
         props.onChange(item.command, item.type);
-        dropDownInstance.hide();
+        dropDownInstance.current.hide();
       }
     }, item.text);
   })));
@@ -6626,7 +6626,7 @@ var TextColor_TextColor = /*#__PURE__*/function (_React$Component) {
       }
 
       if (closePicker) {
-        _this.dropDownInstance.hide();
+        _this.dropDownInstance.current.hide();
 
         _this.props.editor.requestFocus();
       }
@@ -6857,7 +6857,7 @@ var LineHeight_LineHeight = function LineHeight(props) {
       "data-size": item,
       onClick: function onClick(event) {
         LineHeight_toggleLineHeight(event, props);
-        dropDownInstance.hide();
+        dropDownInstance.current.hide();
       }
     }, item);
   })));

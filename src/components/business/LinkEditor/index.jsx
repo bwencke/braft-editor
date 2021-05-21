@@ -78,11 +78,11 @@ class LinkEditor extends React.Component {
   };
 
   handleCancel = () => {
-    this.dropDownInstance.hide();
+    this.dropDownInstance.current.hide();
   };
 
   handleUnlink = () => {
-    this.dropDownInstance.hide();
+    this.dropDownInstance.current.hide();
     this.props.editor.setValue(
       ContentUtils.toggleSelectionLink(this.props.editorState, false),
     );
@@ -96,7 +96,7 @@ class LinkEditor extends React.Component {
       target,
     });
 
-    this.dropDownInstance.hide();
+    this.dropDownInstance.current.hide();
     this.props.editor.requestFocus();
 
     if (hookReturns === false) {
