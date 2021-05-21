@@ -557,7 +557,7 @@ class BraftEditor extends React.Component {
       customStyleFn: this.editorProps.customStyleFn,
     });
 
-    const keyBindingFn = getKeyBindingFn(this.editorProps.keyBindingFn);
+    const keyBindingFn = getKeyBindingFn(this.editorProps.keyBindingFn, this.state.editorState);
 
     const mixedProps = {};
 
@@ -595,7 +595,7 @@ class BraftEditor extends React.Component {
       handlePastedText: this.handlePastedText,
       handlePastedFiles: this.handlePastedFiles,
       onChange: this.onChange,
-      onTab: this.onTab,
+      onTab: keyBindingFn,
       onFocus: this.onFocus,
       onBlur: this.onBlur,
       blockRenderMap,

@@ -5491,121 +5491,6 @@ var external_braft_finder_default = /*#__PURE__*/__webpack_require__.n(external_
   'pt-br': pt_br,
   'vi-vn': vi_vn
 });
-// CONCATENATED MODULE: ./configs/keybindings.js
- // TODO
-// Allow custom shortcut settings
-
-/* harmony default export */ var keybindings = (function (customKeyBindingFn) {
-  return function (event) {
-    if (event.keyCode === 83 && (external_draft_js_["KeyBindingUtil"].hasCommandModifier(event) || external_draft_js_["KeyBindingUtil"].isCtrlKeyCommand(event))) {
-      return 'braft-save';
-    }
-
-    if (customKeyBindingFn) {
-      return customKeyBindingFn(event) || Object(external_draft_js_["getDefaultKeyBinding"])(event);
-    }
-
-    return Object(external_draft_js_["getDefaultKeyBinding"])(event);
-  };
-});
-// CONCATENATED MODULE: ./configs/props.js
-/* harmony default export */ var configs_props = ({
-  language: 'en',
-  controls: ['undo', 'redo', 'separator', 'font-size', 'line-height', 'letter-spacing', 'separator', 'text-color', 'bold', 'italic', 'underline', 'strike-through', 'separator', 'superscript', 'subscript', 'remove-styles', 'emoji', 'separator', 'text-indent', 'text-align', 'separator', 'headings', 'list-ul', 'list-ol', 'blockquote', 'code', 'separator', 'media', 'link', 'table', 'split', 'hr', 'separator', 'clear', 'separator', 'fullscreen'],
-  excludeControls: [],
-  extendControls: [],
-  extendAtomics: [],
-  componentBelowControlBar: null,
-  media: {
-    pasteImage: true,
-    imagePasteLimit: 5,
-    image: true,
-    video: true,
-    audio: true,
-    uploadFn: null,
-    validateFn: null,
-    onBeforeDeselect: null,
-    onDeselect: null,
-    onBeforeSelect: null,
-    onSelect: null,
-    onBeforeRemove: null,
-    onRemove: null,
-    onCancel: null,
-    onFileSelect: null,
-    onBeforeInsert: null,
-    onInsert: null,
-    onChange: null,
-    accepts: {
-      image: 'image/png,image/jpeg,image/gif,image/webp,image/apng,image/svg',
-      video: 'video/mp4',
-      audio: 'audio/mp3'
-    },
-    externals: {
-      audio: true,
-      video: true,
-      image: true,
-      embed: true
-    }
-  },
-  imageControls: ['float-left', 'float-right', 'align-left', 'align-center', 'align-right', 'link', 'size', 'remove'],
-  imageResizable: true,
-  imageEqualRatio: true,
-  colors: ['#000000', '#333333', '#666666', '#999999', '#cccccc', '#ffffff', '#61a951', '#16a085', '#07a9fe', '#003ba5', '#8e44ad', '#f32784', '#c0392b', '#d35400', '#f39c12', '#fdda00'],
-  colorPicker: null,
-  colorPickerTheme: 'dark',
-  colorPickerAutoHide: true,
-  codeTabIndents: 2,
-  headings: ['header-one', 'header-two', 'header-three', 'header-four', 'header-five', 'header-six', 'unstyled'],
-  textAligns: ['left', 'center', 'right', 'justify'],
-  textBackgroundColor: true,
-  allowInsertLinkText: false,
-  defaultLinkTarget: '',
-  letterSpacings: [0, 1, 2, 3, 4, 5, 6],
-  lineHeights: [1, 1.2, 1.5, 1.75, 2, 2.5, 3, 4],
-  fontSizes: [12, 14, 16, 18, 20, 24, 28, 30, 32, 36, 40, 48, 56, 64, 72, 96, 120, 144],
-  fontFamilies: [{
-    name: 'Araial',
-    family: 'Arial, Helvetica, sans-serif'
-  }, {
-    name: 'Georgia',
-    family: 'Georgia, serif'
-  }, {
-    name: 'Impact',
-    family: 'Impact, serif'
-  }, {
-    name: 'Monospace',
-    family: '"Courier New", Courier, monospace'
-  }, {
-    name: 'Tahoma',
-    family: 'tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif'
-  }],
-  converts: {
-    unitExportFn: function unitExportFn(value, type) {
-      return type === 'line-height' ? value : "".concat((value - 2) / 10, "em");
-    },
-    unitImportFn: function unitImportFn(value, type) {
-      return type === 'line-height' ? value : value.replace('em', '') * 10 + 2;
-    }
-  },
-  emojis: ['🤣', '🙌', '💚', '💛', '👏', '😉', '💯', '💕', '💞', '💘', '💙', '💝', '🖤', '💜', '❤️', '😍', '😻', '💓', '💗', '😋', '😇', '😂', '😹', '😘', '💖', '😁', '😀', '🤞', '😲', '😄', '😊', '👍', '😌', '😃', '😅', '✌️', '🤗', '💋', '😗', '😽', '😚', '🤠', '😙', '😺', '👄', '😸', '😏', '😼', '👌', '😎', '😆', '😛', '🙏', '🤝', '🙂', '🤑', '😝', '😐', '😑', '🤤', '😤', '🙃', '🤡', '😶', '😪', '😴', '😵', '😓', '👊', '😦', '😷', '🤐', '😜', '🤓', '👻', '😥', '🙄', '🤔', '🤒', '🙁', '😔', '😯', '☹️', '☠️', '😰', '😩', '😖', '😕', '😒', '😣', '😢', '😮', '😿', '🤧', '😫', '🤥', '😞', '😬', '👎', '💀', '😳', '😨', '🤕', '🤢', '😱', '😭', '😠', '😈', '😧', '💔', '😟', '🙀', '💩', '👿', '😡', '😾', '🖕'],
-  stripPastedStyles: false,
-  triggerChangeOnMount: true,
-  className: '',
-  style: {},
-  controlBarClassName: '',
-  controlBarStyle: {},
-  contentClassName: '',
-  contentStyle: {},
-  draftProps: {},
-  hooks: {},
-  onChange: null,
-  onFocus: null,
-  onBlur: null,
-  onTab: null,
-  onDelete: null,
-  onSave: null,
-  fixPlaceholder: false
-});
 // EXTERNAL MODULE: ../node_modules/draft-js/lib/getFragmentFromSelection.js
 var getFragmentFromSelection = __webpack_require__(29);
 var getFragmentFromSelection_default = /*#__PURE__*/__webpack_require__.n(getFragmentFromSelection);
@@ -5870,6 +5755,132 @@ var handlers_pastedTextHandlers = function pastedTextHandlers(text, html, editor
   });
   return 'handled';
 };
+// CONCATENATED MODULE: ./configs/keybindings.js
+var keybindings_this = undefined;
+
+
+ // TODO
+// Allow custom shortcut settings
+
+var keybindings_getKeyBindingFn = function getKeyBindingFn(customKeyBindingFn, editorState) {
+  return function (event) {
+    if (event.keyCode === 83 && (external_draft_js_["KeyBindingUtil"].hasCommandModifier(event) || external_draft_js_["KeyBindingUtil"].isCtrlKeyCommand(event))) {
+      return 'braft-save';
+    }
+
+    if (event.key === 'Tab') {
+      if (handlers_keyCommandHandlers('tab', editorState, keybindings_this) === 'handled') {
+        event.preventDefault();
+      }
+    }
+
+    if (customKeyBindingFn) {
+      return customKeyBindingFn(event) || Object(external_draft_js_["getDefaultKeyBinding"])(event);
+    }
+
+    return Object(external_draft_js_["getDefaultKeyBinding"])(event);
+  };
+};
+
+/* harmony default export */ var keybindings = (keybindings_getKeyBindingFn);
+// CONCATENATED MODULE: ./configs/props.js
+/* harmony default export */ var configs_props = ({
+  language: 'en',
+  controls: ['undo', 'redo', 'separator', 'font-size', 'line-height', 'letter-spacing', 'separator', 'text-color', 'bold', 'italic', 'underline', 'strike-through', 'separator', 'superscript', 'subscript', 'remove-styles', 'emoji', 'separator', 'text-indent', 'text-align', 'separator', 'headings', 'list-ul', 'list-ol', 'blockquote', 'code', 'separator', 'media', 'link', 'table', 'split', 'hr', 'separator', 'clear', 'separator', 'fullscreen'],
+  excludeControls: [],
+  extendControls: [],
+  extendAtomics: [],
+  componentBelowControlBar: null,
+  media: {
+    pasteImage: true,
+    imagePasteLimit: 5,
+    image: true,
+    video: true,
+    audio: true,
+    uploadFn: null,
+    validateFn: null,
+    onBeforeDeselect: null,
+    onDeselect: null,
+    onBeforeSelect: null,
+    onSelect: null,
+    onBeforeRemove: null,
+    onRemove: null,
+    onCancel: null,
+    onFileSelect: null,
+    onBeforeInsert: null,
+    onInsert: null,
+    onChange: null,
+    accepts: {
+      image: 'image/png,image/jpeg,image/gif,image/webp,image/apng,image/svg',
+      video: 'video/mp4',
+      audio: 'audio/mp3'
+    },
+    externals: {
+      audio: true,
+      video: true,
+      image: true,
+      embed: true
+    }
+  },
+  imageControls: ['float-left', 'float-right', 'align-left', 'align-center', 'align-right', 'link', 'size', 'remove'],
+  imageResizable: true,
+  imageEqualRatio: true,
+  colors: ['#000000', '#333333', '#666666', '#999999', '#cccccc', '#ffffff', '#61a951', '#16a085', '#07a9fe', '#003ba5', '#8e44ad', '#f32784', '#c0392b', '#d35400', '#f39c12', '#fdda00'],
+  colorPicker: null,
+  colorPickerTheme: 'dark',
+  colorPickerAutoHide: true,
+  codeTabIndents: 2,
+  headings: ['header-one', 'header-two', 'header-three', 'header-four', 'header-five', 'header-six', 'unstyled'],
+  textAligns: ['left', 'center', 'right', 'justify'],
+  textBackgroundColor: true,
+  allowInsertLinkText: false,
+  defaultLinkTarget: '',
+  letterSpacings: [0, 1, 2, 3, 4, 5, 6],
+  lineHeights: [1, 1.2, 1.5, 1.75, 2, 2.5, 3, 4],
+  fontSizes: [12, 14, 16, 18, 20, 24, 28, 30, 32, 36, 40, 48, 56, 64, 72, 96, 120, 144],
+  fontFamilies: [{
+    name: 'Araial',
+    family: 'Arial, Helvetica, sans-serif'
+  }, {
+    name: 'Georgia',
+    family: 'Georgia, serif'
+  }, {
+    name: 'Impact',
+    family: 'Impact, serif'
+  }, {
+    name: 'Monospace',
+    family: '"Courier New", Courier, monospace'
+  }, {
+    name: 'Tahoma',
+    family: 'tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif'
+  }],
+  converts: {
+    unitExportFn: function unitExportFn(value, type) {
+      return type === 'line-height' ? value : "".concat((value - 2) / 10, "em");
+    },
+    unitImportFn: function unitImportFn(value, type) {
+      return type === 'line-height' ? value : value.replace('em', '') * 10 + 2;
+    }
+  },
+  emojis: ['🤣', '🙌', '💚', '💛', '👏', '😉', '💯', '💕', '💞', '💘', '💙', '💝', '🖤', '💜', '❤️', '😍', '😻', '💓', '💗', '😋', '😇', '😂', '😹', '😘', '💖', '😁', '😀', '🤞', '😲', '😄', '😊', '👍', '😌', '😃', '😅', '✌️', '🤗', '💋', '😗', '😽', '😚', '🤠', '😙', '😺', '👄', '😸', '😏', '😼', '👌', '😎', '😆', '😛', '🙏', '🤝', '🙂', '🤑', '😝', '😐', '😑', '🤤', '😤', '🙃', '🤡', '😶', '😪', '😴', '😵', '😓', '👊', '😦', '😷', '🤐', '😜', '🤓', '👻', '😥', '🙄', '🤔', '🤒', '🙁', '😔', '😯', '☹️', '☠️', '😰', '😩', '😖', '😕', '😒', '😣', '😢', '😮', '😿', '🤧', '😫', '🤥', '😞', '😬', '👎', '💀', '😳', '😨', '🤕', '🤢', '😱', '😭', '😠', '😈', '😧', '💔', '😟', '🙀', '💩', '👿', '😡', '😾', '🖕'],
+  stripPastedStyles: false,
+  triggerChangeOnMount: true,
+  className: '',
+  style: {},
+  controlBarClassName: '',
+  controlBarStyle: {},
+  contentClassName: '',
+  contentStyle: {},
+  draftProps: {},
+  hooks: {},
+  onChange: null,
+  onFocus: null,
+  onBlur: null,
+  onTab: null,
+  onDelete: null,
+  onSave: null,
+  fixPlaceholder: false
+});
 // CONCATENATED MODULE: ./helpers/responsive.js
 
 
@@ -8400,7 +8411,7 @@ var editor_BraftEditor = /*#__PURE__*/function (_React$Component) {
         unitExportFn: unitExportFn,
         customStyleFn: this.editorProps.customStyleFn
       });
-      var keyBindingFn = keybindings(this.editorProps.keyBindingFn);
+      var keyBindingFn = keybindings(this.editorProps.keyBindingFn, this.state.editorState);
       var mixedProps = {};
 
       if (this.state.editorLocked || this.editorProps.disabled || this.editorProps.readOnly || this.editorProps.draftProps.readOnly) {
@@ -8424,7 +8435,7 @@ var editor_BraftEditor = /*#__PURE__*/function (_React$Component) {
         handlePastedText: this.handlePastedText,
         handlePastedFiles: this.handlePastedFiles,
         onChange: this.onChange,
-        onTab: this.onTab,
+        onTab: keyBindingFn,
         onFocus: this.onFocus,
         onBlur: this.onBlur,
         blockRenderMap: blockRenderMap,

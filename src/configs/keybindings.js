@@ -1,9 +1,9 @@
 import { getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
-
+import { keyCommandHandlers } from 'configs/handlers';
 // TODO
 // Allow custom shortcut settings
 
-export default (customKeyBindingFn) => (event) => {
+const getKeyBindingFn = (customKeyBindingFn, editorState) => (event) => {
   if (
     event.keyCode === 83 &&
     (KeyBindingUtil.hasCommandModifier(event) ||
@@ -12,9 +12,17 @@ export default (customKeyBindingFn) => (event) => {
     return 'braft-save';
   }
 
+  if (event.key === 'Tab') {
+    if (keyCommandHandlers('tab', editorState, this) === 'handled') {
+      event.preventDefault();
+    }
+  }
+
   if (customKeyBindingFn) {
     return customKeyBindingFn(event) || getDefaultKeyBinding(event);
   }
 
   return getDefaultKeyBinding(event);
 };
+
+export default getKeyBindingFn
