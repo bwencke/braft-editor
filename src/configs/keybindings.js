@@ -1,18 +1,31 @@
-import { getDefaultKeyBinding, KeyBindingUtil } from 'draft-js'
-
+import { getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
+import { keyCommandHandlers } from 'configs/handlers';
 // TODO
-// 允许自定义的快捷键设置
+// Allow custom shortcut settings
 
-export default (customKeyBindingFn) => (event) => {
+const getKeyBindingFn = (customKeyBindingFn, editorState, editorProps) => (event) => {
+  if (
+    event.keyCode === 83 &&
+    (KeyBindingUtil.hasCommandModifier(event) ||
+      KeyBindingUtil.isCtrlKeyCommand(event))
+  ) {
+    return 'braft-save';
+  }
 
-  if (event.keyCode === 83 && (KeyBindingUtil.hasCommandModifier(event) || KeyBindingUtil.isCtrlKeyCommand(event))) {
-    return 'braft-save'
+  if (event.key === 'Tab') {
+    if (keyCommandHandlers('tab', editorState, this) === 'handled') {
+      event.preventDefault();
+    }
+    if (editorProps && editorProps.onTab) {
+      editorProps.onTab(event);
+    }
   }
 
   if (customKeyBindingFn) {
-    return customKeyBindingFn(event) || getDefaultKeyBinding(event)
+    return customKeyBindingFn(event) || getDefaultKeyBinding(event);
   }
 
-  return getDefaultKeyBinding(event)
+  return getDefaultKeyBinding(event);
+};
 
-}
+export default getKeyBindingFn

@@ -1,53 +1,47 @@
-import './style.scss'
-import React from 'react'
-import StaticContainer from 'components/common/StaticContainer'
-import { ContentUtils } from 'braft-utils'
+/* eslint-disable jsx-a11y/media-has-caption */
+import React from 'react';
+import PropTypes from 'prop-types';
+import { ContentUtils } from 'braft-utils';
 
-export default class Video extends React.Component {
+import PlayerModal from 'components/business/PlayerModal';
 
-  state = {
-    toolbarVisible: false,
-  }
+import './style.scss';
 
-  render () {
+const Video = ({ mediaData, language, editor, editorState, block }) => {
+  const { url, name, meta } = mediaData;
+  const { poster = '' } = meta;
 
-    const { toolbarVisible } = this.state
-    const { mediaData } = this.props
-    const { url, meta } = mediaData
+  const removeVideo = () => {
+    editor.setValue(ContentUtils.removeBlock(editorState, block));
+  };
 
-    return (
-      <div
-        className='bf-video-wrap'
-        onMouseOver={this.showToolbar}
-        onMouseLeave={this.hideToolbar}
+  return (
+    <div className="bf-video-wrap">
+      <PlayerModal
+        type="video"
+        onRemove={removeVideo}
+        poster={poster}
+        language={language}
+        url={url}
+        name={name}
+        title={language.videoPlayer.title}
       >
-        <StaticContainer>
-          <video controls src={url} poster={meta ? meta.poster || '' : ''}/>
-        </StaticContainer>
-        {toolbarVisible ? (
-          <div className='bf-media-toolbar'>
-            <a onClick={this.removeVideo}>&#xe9ac;</a>
-          </div>
-        ) : null}
-      </div>
-    )
+        <div className="bf-video-player">
+          <video controls poster={poster}>
+            <source src={url} />
+          </video>
+        </div>
+      </PlayerModal>
+    </div>
+  );
+};
 
-  }
+Video.propTypes = {
+  mediaData: PropTypes.any,
+  language: PropTypes.any,
+  editor: PropTypes.any,
+  editorState: PropTypes.any,
+  block: PropTypes.any,
+};
 
-  removeVideo = () => {
-    this.props.editor.setValue(ContentUtils.removeBlock(this.props.editorState, this.props.block))
-  }
-
-  showToolbar = () => {
-    this.setState({
-      toolbarVisible: true
-    })
-  }
-
-  hideToolbar = () => {
-    this.setState({
-      toolbarVisible: false
-    })
-  }
-
-}
+export default Video;

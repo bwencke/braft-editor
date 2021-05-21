@@ -5,7 +5,7 @@ export default {
     confirm: '確定',
     inert: '插入',
     width: '宽度',
-    height: '高度'
+    height: '高度',
   },
   controls: {
     clear: '清除内容',
@@ -54,22 +54,23 @@ export default {
     exitFullscreen: '退出全熒幕',
   },
   linkEditor: {
-    inputPlaceHolder: '輸入鏈接地址',
+    textInputPlaceHolder: '輸入鏈接文字',
+    linkInputPlaceHolder: '輸入鏈接地址',
     inputWithEnterPlaceHolder: '輸入鏈接地址並回車',
     openInNewWindow: '在新窗口打開',
-    removeLink: '移除鏈接'
+    removeLink: '移除鏈接',
   },
   audioPlayer: {
-    title: '播放音頻文件'
+    title: '播放音頻文件',
   },
   videoPlayer: {
     title: '播放視頻文件',
-    embedTitle: '嵌入式媒體'
+    embedTitle: '嵌入式媒體',
   },
   media: {
     image: '圖像',
     video: '視頻',
     audio: '音頻',
-    embed: '嵌入式媒體'
-  }
-}
+    embed: '嵌入式媒體',
+  },
+};
