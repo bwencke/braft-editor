@@ -1,75 +1,153 @@
-import BraftEditor, { EditorState } from './editor'
-import { convertRawToEditorState, convertHTMLToEditorState, convertEditorStateToRaw, convertEditorStateToHTML } from 'braft-convert'
-import { createExtensibleEditor, compositeStyleImportFn, compositeStyleExportFn, compositeEntityImportFn, compositeEntityExportFn, compositeBlockImportFn, compositeBlockExportFn } from 'helpers/extension'
-import { getDecorators } from 'renderers'
+import {
+  convertRawToEditorState,
+  convertHTMLToEditorState,
+  convertEditorStateToRaw,
+  convertEditorStateToHTML,
+} from 'braft-convert';
 
-EditorState.prototype.setConvertOptions = function (options = {}) {
-  this.convertOptions = options
-}
+import {
+  createExtensibleEditor,
+  compositeStyleImportFn,
+  compositeStyleExportFn,
+  compositeEntityImportFn,
+  compositeEntityExportFn,
+  compositeBlockImportFn,
+  compositeBlockExportFn,
+} from 'helpers/extension';
+import { getDecorators } from 'renderers';
+import BraftEditor, { EditorState } from 'editor';
 
-EditorState.prototype.toHTML = function (options = {}) {
-  const convertOptions = this.convertOptions || {}
-  return convertEditorStateToHTML(this, {...convertOptions, ...options})
-}
+EditorState.prototype.setConvertOptions = function setConvertOptions(
+  options = {},
+) {
+  this.convertOptions = options;
+};
 
-EditorState.prototype.toRAW = function (noStringify) {
-  return noStringify ? convertEditorStateToRaw(this) : JSON.stringify(convertEditorStateToRaw(this))
-}
+EditorState.prototype.toHTML = function toHTML(options = {}) {
+  const convertOptions = this.convertOptions || {};
+  return convertEditorStateToHTML(this, { ...convertOptions, ...options });
+};
 
-EditorState.prototype.toText = function () {
-  return this.getCurrentContent().getPlainText()
-}
+EditorState.prototype.toRAW = function toRAW(noStringify) {
+  return noStringify
+    ? convertEditorStateToRaw(this)
+    : JSON.stringify(convertEditorStateToRaw(this));
+};
 
-EditorState.prototype.isEmpty = function () {
-  return !this.getCurrentContent().hasText()
-}
+EditorState.prototype.toText = function toText() {
+  return this.getCurrentContent().getPlainText();
+};
 
-BraftEditor.createEditorState = EditorState.createFrom = (content, options = {}) => {
+EditorState.prototype.isEmpty = function isEmpty() {
+  return !this.getCurrentContent().hasText();
+};
 
-  options.unitExportFn = options.unitExportFn || BraftEditor.defaultProps.converts.unitExportFn
-  options.unitImportFn = options.unitImportFn || BraftEditor.defaultProps.converts.unitImportFn
-  options.styleImportFn = compositeStyleImportFn(options.styleImportFn, options.editorId)
-  options.entityImportFn = compositeEntityImportFn(options.entityImportFn, options.editorId)
-  options.blockImportFn = compositeBlockImportFn(options.blockImportFn, options.editorId)
+EditorState.createFrom = (content, options = {}) => {
+  const customOptions = { ...options };
+  customOptions.unitExportFn =
+    customOptions.unitExportFn ||
+    BraftEditor.defaultProps.converts.unitExportFn;
+  // customOptions.unitImportFn =
+  //   options.unitImportFn ||
+  //   BraftEditor.defaultProps.converts.unitImportFn;
+  customOptions.styleImportFn = compositeStyleImportFn(
+    customOptions.styleImportFn,
+    customOptions.editorId,
+  );
+  customOptions.entityImportFn = compositeEntityImportFn(
+    customOptions.entityImportFn,
+    customOptions.editorId,
+  );
+  customOptions.blockImportFn = compositeBlockImportFn(
+    customOptions.blockImportFn,
+    customOptions.editorId,
+  );
 
-  let editorState = null
+  let editorState = null;
 
   if (content instanceof EditorState) {
-    editorState = content
-  } else if (typeof content === 'object' && content && content.blocks && content.entityMap) {
-    editorState = convertRawToEditorState(content, getDecorators(options.editorId))
-  } else if (typeof content === 'string') {
+    editorState = content;
+  }
+  if (
+    typeof content === 'object' &&
+    content &&
+    content.blocks &&
+    content.entityMap
+  ) {
+    editorState = convertRawToEditorState(
+      content,
+      getDecorators(customOptions.editorId),
+    );
+  }
+  if (typeof content === 'string') {
     try {
-      editorState = EditorState.createFrom(JSON.parse(content), options)
+      if (/^(-)?\d+$/.test(content)) {
+        editorState = convertHTMLToEditorState(
+          content,
+          getDecorators(customOptions.editorId),
+          customOptions,
+          'create',
+        );
+      } else {
+        editorState = EditorState.createFrom(
+          JSON.parse(content),
+          customOptions,
+        );
+      }
     } catch (error) {
-      editorState = convertHTMLToEditorState(content, getDecorators(options.editorId), options, 'create')
+      editorState = convertHTMLToEditorState(
+        content,
+        getDecorators(customOptions.editorId),
+        customOptions,
+        'create',
+      );
     }
+  }
+  if (typeof content === 'number') {
+    editorState = convertHTMLToEditorState(
+      content.toLocaleString().replace(/,/g, ''),
+      getDecorators(customOptions.editorId),
+      customOptions,
+      'create',
+    );
   } else {
-    editorState = EditorState.createEmpty(getDecorators(options.editorId))
+    editorState = EditorState.createEmpty(
+      getDecorators(customOptions.editorId),
+    );
   }
 
-  options.styleExportFn = compositeStyleExportFn(options.styleExportFn, options.editorId)
-  options.entityExportFn = compositeEntityExportFn(options.entityExportFn, options.editorId)
-  options.blockExportFn = compositeBlockExportFn(options.blockExportFn, options.editorId)
+  customOptions.styleExportFn = compositeStyleExportFn(
+    customOptions.styleExportFn,
+    customOptions.editorId,
+  );
+  customOptions.entityExportFn = compositeEntityExportFn(
+    customOptions.entityExportFn,
+    customOptions.editorId,
+  );
+  customOptions.blockExportFn = compositeBlockExportFn(
+    customOptions.blockExportFn,
+    customOptions.editorId,
+  );
 
-  editorState.setConvertOptions(options)
+  editorState.setConvertOptions(customOptions);
 
-  return editorState
+  return editorState;
+};
 
-}
+BraftEditor.createEditorState = EditorState.createFrom;
 
-export default createExtensibleEditor(BraftEditor)
-export { EditorState, getDecorators }
+export default createExtensibleEditor(BraftEditor);
+export { EditorState, getDecorators };
 
-// 2.1版本开发计划
-// [ ]优化选中多行文字是插入链接报错的问题
-// [ ]新增编辑器内图片删除hook
+// 2.1 version development plan
+// [] Optimizing the selection of multiple lines of text is an error when inserting a link
+// [] Add a new image delete hook in the editor
 
-// 2.2版本开发计划
-// [ ]表格功能
-// [ ]美化UI，包括图标和界面风格
+// 2.2 development plan
+// [] table function
+// [] Beautify the UI, including icons and interface style
 
-// 2.3版本开发计划
-// [ ]初级md快捷输入支持
-// [ ]图片裁切等简单的编辑功能
-// [ ]允许自定义快捷键
+// version 2.3 development plan
+// [] Primary md shortcut input support
+// [] simple editing functions such as picture cropping
+// [] allows custom shortcuts

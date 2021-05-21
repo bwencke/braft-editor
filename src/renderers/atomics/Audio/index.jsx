@@ -1,53 +1,43 @@
-import './style.scss'
-import React from 'react'
-import StaticContainer from 'components/common/StaticContainer'
-import { ContentUtils } from 'braft-utils'
+/* eslint-disable jsx-a11y/media-has-caption */
+import React from 'react';
+import PropTypes from 'prop-types';
+import { ContentUtils } from 'braft-utils';
 
-export default class Audio extends React.Component {
+import PlayerModal from 'components/business/PlayerModal';
 
-  state = {
-    toolbarVisible: false,
-  }
+import './style.scss';
 
-  render () {
+const Audio = ({ mediaData, language, editor, editorState, block }) => {
+  const { url, name, meta } = mediaData;
+  const removeAudio = () => {
+    editor.setValue(ContentUtils.removeBlock(editorState, block));
+  };
 
-    const { toolbarVisible } = this.state
-    const { mediaData } = this.props
-    const { url } = mediaData
-
-    return (
-      <div
-        className='bf-audio'
-        onMouseOver={this.showToolbar}
-        onMouseLeave={this.hideToolbar}
+  return (
+    <div className="bf-audio-wrap">
+      <PlayerModal
+        type="audio"
+        onRemove={removeAudio}
+        poster={meta ? meta.poster || '' : ''}
+        language={language}
+        url={url}
+        name={name}
+        title={language.audioPlayer.title}
       >
-        <StaticContainer>
-          <audio controls src={url}/>
-        </StaticContainer>
-        {toolbarVisible ? (
-          <div className='bf-media-toolbar'>
-            <a onClick={this.removeAudio}>&#xe9ac;</a>
-          </div>
-        ) : null}
-      </div>
-    )
+        <div className="bf-audio-player">
+          <audio controls src={url} />
+        </div>
+      </PlayerModal>
+    </div>
+  );
+};
 
-  }
+Audio.propTypes = {
+  mediaData: PropTypes.any,
+  language: PropTypes.any,
+  editor: PropTypes.any,
+  editorState: PropTypes.any,
+  block: PropTypes.any,
+};
 
-  removeAudio = () => {
-    this.props.editor.setValue(ContentUtils.removeBlock(this.props.editorState, this.props.block))
-  }
-
-  showToolbar = () => {
-    this.setState({
-      toolbarVisible: true
-    })
-  }
-
-  hideToolbar = () => {
-    this.setState({
-      toolbarVisible: false
-    })
-  }
-
-}
+export default Audio;
